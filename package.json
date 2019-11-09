@@ -4,15 +4,23 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "prepack": "tsc -b"
+    "prepack": "tsc -b && uglifyjs './dist/index.js' --output './dist/index.js'"
   },
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "logger"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TheRealSyler/s.logger"
+  },
   "author": "Syler",
   "license": "MIT",
   "devDependencies": {
-    "typescript": "^3.7.2"
+    "typescript": "^3.7.2",
+    "uglify-js": "^3.6.8"
   },
   "dependencies": {}
 }

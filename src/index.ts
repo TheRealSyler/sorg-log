@@ -1,14 +1,17 @@
 const isBrowser = typeof window !== 'undefined' && typeof window.document !== 'undefined';
 
-export interface LoggerTypes {
+interface LoggerTypes {
   [key: string]: LoggerType;
 }
 export interface LoggerType {
   styles: LoggerStyle[];
-  wrappers: LoggerWrapper[];
+  wrappers?: LoggerWrapper[];
   enabled?: boolean;
 }
 type LoggerWrapper = [string, string] | undefined | null;
+/**
+ * color/background work in node and the browser, the other properties only work in the browser.
+ */
 type LoggerStyle =
   | string
   | {
@@ -24,26 +27,39 @@ export class Logger<T extends LoggerTypes> {
     for (const key in types) {
       if (types.hasOwnProperty(key)) {
         const type = types[key];
+        type.enabled = type.enabled === false ? false : true;
         if (isBrowser) {
           type.styles = type.styles.map(style => getStyle(style));
         }
       }
     }
   }
-  Log(type: keyof T, messages: string[] | string) {
+  Log(type: keyof T, ...messages: string[]) {
     if (this.types[type].enabled) {
+      const wrappers = (this.types[type].wrappers === undefined ? [] : this.types[type].wrappers) as LoggerWrapper[];
       let msg = '';
-      if (typeof messages === 'string') {
-        const message = messages[0];
-        const wrapper = this.types[type].wrappers[0];
-        const style = this.types[type].styles[0];
-        msg += getMessage(message, style, wrapper);
-      } else {
-        for (let i = 0; i < messages.length; i++) {
-          const message = messages[i];
-          const wrapper = this.types[type].wrappers[i];
-          const style = this.types[type].styles[i];
-          msg += getMessage(message, style, wrapper);
+      for (let i = 0; i < messages.length; i++) {
+        const message = messages[i];
+        const wrapper = wrappers[i];
+        const style = this.types[type].styles[i];
+        if (isBrowser) {
+          msg += `%c${wrapper && wrapper[0] ? wrapper[0] : ''}${message}${wrapper && wrapper[1] ? wrapper[1] : ''}`;
+        } else {
+          const color =
+            typeof style === 'string'
+              ? `\u001B[38;5;${rgbToAnsi256(...ConvertHexString(style))}m`
+              : style.color
+              ? `\u001B[38;5;${rgbToAnsi256(...ConvertHexString(style.color))}m`
+              : '';
+          const background =
+            typeof style === 'string'
+              ? ''
+              : style.background
+              ? `\u001B[48;5;${rgbToAnsi256(...ConvertHexString(style.background))}m`
+              : '';
+          msg += `${color}${background}${wrapper && wrapper[0] ? wrapper[0] : ''}${message}${
+            wrapper && wrapper[1] ? wrapper[1] : ''
+          }\u001b[0m`;
         }
       }
       if (isBrowser) {
@@ -56,22 +72,6 @@ export class Logger<T extends LoggerTypes> {
 
   SetEnabled(type: keyof T, val: boolean) {
     this.types[type].enabled = val;
-  }
-}
-
-function getMessage(message: string, style: LoggerStyle, wrapper: LoggerWrapper) {
-  if (isBrowser) {
-    return `%c${wrapper && wrapper[0] ? wrapper[0] : ''}${message}${wrapper && wrapper[1] ? wrapper[1] : ''}`;
-  } else {
-    const color =
-      typeof style === 'string'
-        ? `\u001B[38;5;${rgbToAnsi256(...ConvertHexString(style.replace(/color: (.*?);/, '$1')))}m`
-        : style.color
-        ? `\u001B[38;5;${rgbToAnsi256(...ConvertHexString(style.color.replace(/color: (.*?);/, '$1')))}m`
-        : '';
-    return `${color}${wrapper && wrapper[0] ? wrapper[0] : ''}${message}${
-      wrapper && wrapper[1] ? wrapper[1] : ''
-    }\u001b[0m`;
   }
 }
 
