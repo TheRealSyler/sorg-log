@@ -1,8 +1,10 @@
 ## S.Logger
 
+[![Size](https://badgen.net/bundlephobia/min/s.logger)](https://bundlephobia.com/result?p=s.logger) [![Size](https://badgen.net/packagephobia/install/s.logger)](https://bundlephobia.com/result?p=s.logger) [![Npm](https://img.shields.io/npm/v/s.logger)](https://www.npmjs.com/package/s.logger) [![Npm](https://img.shields.io/github/last-commit/TheRealSyler/s.logger)](https://github.com/TheRealSyler/s.logger)
+
 s.loggers purpose is to have colored output in the browser and in node, only supports strings for now.
 
-![](images/s.logger.png)
+![](https://raw.githubusercontent.com/TheRealSyler/s.logger/master/images/s.logger.png)
 
 #### Usage
 
