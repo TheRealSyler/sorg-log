@@ -4,7 +4,8 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "prepack": "tsc -b && uglifyjs './dist/index.js' --output './dist/index.js'"
+    "build": "tsc -b && uglifyjs './dist/index.js' --output './dist/index.js'",
+    "prepack": "npm run build"
   },
   "files": [
     "dist"
@@ -21,5 +22,8 @@
   "devDependencies": {
     "typescript": "^3.7.2",
     "uglify-js": "^3.6.8"
+  },
+  "dependencies": {
+    "s.color": "0.0.10"
   }
 }
