@@ -23,6 +23,6 @@
     "typescript": "^3.7.2"
   },
   "dependencies": {
-    "s.color": "0.0.10"
+    "s.color": "^0.0.11"
   }
 }

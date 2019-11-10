@@ -1,6 +1,12 @@
+import { StringToRGB } from 's.color';
+
 export const isBrowser = typeof window !== 'undefined' && typeof window.document !== 'undefined';
 
-export function rgbToAnsi256(r: number, g: number, b: number) {
+export function stringColorToAnsi256(color?: string) {
+  if (!color) {
+    return undefined;
+  }
+  const { r, g, b } = StringToRGB(color, true);
   if (r === g && g === b) {
     if (r < 8) {
       return 16;
@@ -17,7 +23,7 @@ export function rgbToAnsi256(r: number, g: number, b: number) {
   return ansi;
 }
 
-export function ConvertHexString(text: string): [number, number, number] {
+function ConvertHexString(text: string): [number, number, number] {
   let color = { red: 0, green: 0, blue: 0, alpha: 0 };
   const raw = text.replace('#', '');
   const length = raw.length;
@@ -38,5 +44,6 @@ export function ConvertHexString(text: string): [number, number, number] {
   } else {
     color.alpha = 1;
   }
+  console.log(text, [color.red, color.green, color.blue]);
   return [color.red, color.green, color.blue];
 }

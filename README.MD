@@ -103,8 +103,8 @@ logger.Log('help', '', '');
 ```
 
 <span style="display: flex; justify-content: space-around;">
-<img src="https://raw.githubusercontent.com/TheRealSyler/s.logger/master/images/arrow.svg" style="display: inline;">
-<img src="https://raw.githubusercontent.com/TheRealSyler/s.logger/master/images/arrow.svg" style="display: inline;">
+<img src="https://raw.githubusercontent.com/TheRealSyler/s.logger/master/images/arrow.png" style="display: inline;">
+<img src="https://raw.githubusercontent.com/TheRealSyler/s.logger/master/images/arrow.png" style="display: inline;">
 </span>
 
 ![](https://raw.githubusercontent.com/TheRealSyler/s.logger/master/images/logger-ex.png)

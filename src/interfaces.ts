@@ -1,6 +1,4 @@
-import { RGBColor } from 's.color';
-
-type Color = string | RGBColor;
+import { PresetBase } from './presets';
 
 export type LoggerWrapper = [string, string] | undefined | null;
 
@@ -10,15 +8,15 @@ export type LoggerWrapper = [string, string] | undefined | null;
 export type LoggerStyle =
   | string
   | {
-      background?: Color;
-      color?: Color;
+      background?: string;
+      color?: string;
       padding?: string;
       margin?: string;
       border?: string;
-      [key: string]: Color | string | undefined;
+      [key: string]: string | undefined;
     };
 
-export type LoggerAcceptableLogTypes = string | number;
+export type LoggerAcceptableLogTypes = string | number | any[];
 
 export type convertedMessage = { message: string; canStyle: boolean };
 export type Converter = (message: LoggerAcceptableLogTypes) => convertedMessage;
@@ -27,13 +25,18 @@ export type Styler = (msg: convertedMessage, style: LoggerStyle, wrapper: Logger
 export interface LoggerType {
   styles: LoggerStyle[];
   wrappers?: LoggerWrapper[];
+  preset?: PresetBase;
   /**
    * Used to change Messages before they get styled.
    */
-  customHandler?: (
-    data: { rawMessages: LoggerAcceptableLogTypes[]; wrappers: LoggerWrapper[]; styles: LoggerStyle[] },
-    converter: Converter,
-    styler: Styler
-  ) => string;
+  customHandler?: CustomHandler;
   enabled?: boolean;
 }
+export type CustomHandlerData = {
+  rawMessages: LoggerAcceptableLogTypes[];
+  wrappers: LoggerWrapper[];
+  styles: LoggerStyle[];
+};
+export type CustomHandler = (data: CustomHandlerData, converter: Converter, styler: Styler) => string;
+
+export type PresetHandler<T> = (preset: T, data: CustomHandlerData) => string;
