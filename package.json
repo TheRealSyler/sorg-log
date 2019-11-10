@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc -b && uglifyjs './dist/index.js' --output './dist/index.js'",
+    "build": "tsc -b",
     "prepack": "npm run build"
   },
   "files": [
@@ -20,8 +20,7 @@
   "author": "Syler",
   "license": "MIT",
   "devDependencies": {
-    "typescript": "^3.7.2",
-    "uglify-js": "^3.6.8"
+    "typescript": "^3.7.2"
   },
   "dependencies": {
     "s.color": "0.0.10"

@@ -52,24 +52,35 @@ const logger = new Logger<{ help: LoggerType }>({
       { color: '#fa0', background: '#222' }
     ],
     wrappers: [['  ', ' '], [' ', ' '], [' ', ' ']],
-    messagesHandler: messages => {
+    customHandler: (data, converter, styler) => {
+      const messages: convertedMessage[] = [];
+      for (let i = 0; i < data.rawMessages.length; i++) {
+        messages.push(converter(data.rawMessages[i]));
+      }
+
+      const lastIndex = messages.length - 1;
       if (messages.length > 1) {
-        const space = 17 - messages[0].length;
+        const space = 17 - messages[0].message.length;
         if (space >= 0) {
-          messages[0] = messages[0].concat(' '.repeat(space));
+          messages[0].message = messages[0].message.concat(' '.repeat(space));
         }
 
-        let concatenatedMessages = '';
+        let concatenatedMessages: string = '';
         for (let i = 1; i < messages.length; i++) {
-          const msg = messages[i];
-          concatenatedMessages += msg;
+          concatenatedMessages += messages[i].message;
         }
         const endingSpace = 110 - (concatenatedMessages.length + (messages.length > 2 ? 4 : 2));
         if (endingSpace >= 0) {
-          messages[messages.length - 1] = messages[messages.length - 1].concat(' '.repeat(endingSpace));
+          messages[lastIndex].message = messages[lastIndex].message.concat(' '.repeat(endingSpace));
         }
       }
-      return messages;
+      let output = '';
+      for (let i = 0; i < messages.length; i++) {
+        const message = messages[i];
+        output += styler(message, data.styles[i], data.wrappers[i]);
+      }
+
+      return output;
     }
   }
 });
@@ -92,8 +103,8 @@ logger.Log('help', '', '');
 ```
 
 <span style="display: flex; justify-content: space-around;">
-<img src="./images/arrow.svg" style="display: inline;">
-<img src="./images/arrow.svg" style="display: inline;">
+<img src="https://raw.githubusercontent.com/TheRealSyler/s.logger/master/images/arrow.svg" style="display: inline;">
+<img src="https://raw.githubusercontent.com/TheRealSyler/s.logger/master/images/arrow.svg" style="display: inline;">
 </span>
 
-![](./images/logger-ex.png)
+![](https://raw.githubusercontent.com/TheRealSyler/s.logger/master/images/logger-ex.png)
