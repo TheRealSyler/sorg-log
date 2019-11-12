@@ -1,24 +1,7 @@
 import { stringColorToAnsi256 } from './utils';
+import { LoggerStyle } from './interfaces';
 
 export type LoggerWrapper = [string, string] | undefined | null;
-
-/**
- * color/background work in node and the browser, the other properties only work in the browser.
- */
-export type LoggerStyle =
-  | string
-  | {
-      background?: string;
-      color?: string;
-      padding?: string;
-      margin?: string;
-      border?: string;
-      /**
-       * if true the style doesn't get reset in node.
-       */
-      removeResetColorCode?: boolean;
-      [key: string]: boolean | string | undefined;
-    };
 
 export function wrap(message: string, wrapper: LoggerWrapper, style?: string, removeResetColorCode = false) {
   return handleStyle(

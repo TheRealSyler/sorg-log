@@ -1,4 +1,4 @@
-import { convertedMessage, PresetHandler, CustomHandlerData } from './interfaces';
+import { PresetHandler, CustomHandlerData, ConverterOutput } from './interfaces';
 import { converter } from './converter';
 import { styler } from './styler';
 
@@ -25,27 +25,24 @@ const nodeHelpMessage: PresetHandler<PresetNodeHelp> = (preset, data) => {
     preset.text = undefined;
     let output = '';
     output += nodeHelpMessage(preset, {
-      rawMessages: ['\n ', ' '],
-      styles: data.styles,
-      wrappers: []
+      ...data,
+      rawMessages: ['\n ', ' ']
     });
     for (const line of lines) {
       output += nodeHelpMessage(preset, {
-        rawMessages: '\n'.concat(line).split(preset.splitter),
-        styles: data.styles,
-        wrappers: []
+        ...data,
+        rawMessages: '\n'.concat(line).split(preset.splitter)
       });
     }
     output += nodeHelpMessage(preset, {
-      rawMessages: ['\n ', ''],
-      styles: data.styles,
-      wrappers: []
+      ...data,
+      rawMessages: ['\n ', '']
     });
     return output.replace(/^\n/, '');
   } else {
-    const messages: convertedMessage[] = [];
+    const messages: ConverterOutput[] = [];
     for (let i = 0; i < data.rawMessages.length; i++) {
-      messages.push(converter(data.rawMessages[i]));
+      messages.push(converter(data.rawMessages[i], { typeStyles: data.typeStyles }));
     }
 
     const lastIndex = messages.length - 1;
@@ -66,11 +63,9 @@ const nodeHelpMessage: PresetHandler<PresetNodeHelp> = (preset, data) => {
     }
     let output = '';
     for (let i = 0; i < messages.length; i++) {
-      const message = messages[i];
-      message.message = message.message.replace(/^(\n)?/, '$1 ');
-      output += styler(message, data.styles[i], ['', ' ']);
+      messages[i].message = messages[i].message.replace(/^(\n)?/, '$1 ');
+      output += styler(messages[i], data.styles[i], ['', ' ']);
     }
-
     return output;
   }
 };

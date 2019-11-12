@@ -14,7 +14,10 @@ import { Logger, LoggerType } from 's.logger';
 const logger = new Logger<{ error: LoggerType; info: LoggerType; browserMessage: LoggerType }>({
   error: {
     styles: ['#f24', { color: '#fc0', background: '#001' }],
-    wrappers: [['ERROR [', ']: '], [' ', '! ']]
+    wrappers: [
+      ['ERROR [', ']: '],
+      [' ', '! ']
+    ]
   },
   info: {
     styles: ['#39f'],
@@ -51,55 +54,20 @@ const logger = new Logger<{ help: LoggerType }>({
       { color: '#4e0', background: '#222' },
       { color: '#fa0', background: '#222' }
     ],
-    wrappers: [['  ', ' '], [' ', ' '], [' ', ' ']],
-    customHandler: (data, converter, styler) => {
-      const messages: convertedMessage[] = [];
-      for (let i = 0; i < data.rawMessages.length; i++) {
-        messages.push(converter(data.rawMessages[i]));
-      }
-
-      const lastIndex = messages.length - 1;
-      if (messages.length > 1) {
-        const space = 17 - messages[0].message.length;
-        if (space >= 0) {
-          messages[0].message = messages[0].message.concat(' '.repeat(space));
-        }
-
-        let concatenatedMessages: string = '';
-        for (let i = 1; i < messages.length; i++) {
-          concatenatedMessages += messages[i].message;
-        }
-        const endingSpace = 110 - (concatenatedMessages.length + (messages.length > 2 ? 4 : 2));
-        if (endingSpace >= 0) {
-          messages[lastIndex].message = messages[lastIndex].message.concat(' '.repeat(endingSpace));
-        }
-      }
-      let output = '';
-      for (let i = 0; i < messages.length; i++) {
-        const message = messages[i];
-        output += styler(message, data.styles[i], data.wrappers[i]);
-      }
-
-      return output;
-    }
+    preset: new PresetNodeHelp(
+      `Help;
+;
+--concurrent;Number Of concurrent pages, this cli uses puppeteer to scrape the data.
+--outPath;Path Where the Files will be created.;NOTE: The path has to exist.
+--fileType;File Type Only Supported Types Are:;json | ts | js
+--prefix;prefixes every File.
+--ignore;Files in this list don't get Created.;This Arg is Comma Separated Example: 'noDataProps,standardProps'
+-h h --help help;Shows this Message.`
+    )
   }
 });
 
-logger.Log('help', '', '');
-logger.Log('help', 'Help', '');
-logger.Log('help', '', '');
-logger.Log('help', '--concurrent', 'Number Of concurrent pages, this cli uses puppeteer to scrape the data.');
-logger.Log('help', '--outPath', 'Path Where the Files will be created.', 'NOTE: The path has to exist.');
-logger.Log('help', '--fileType', 'File Type Only Supported Types Are:', 'json | ts | js');
-logger.Log('help', '--prefix', 'prefixes every File.');
-logger.Log(
-  'help',
-  '--ignore',
-  "files in this list don't get Created.",
-  "This Arg is Comma Separated Example: 'noDataProps,standardProps'"
-);
-logger.Log('help', '-h|h|--help|help', 'Shows this Message.');
-logger.Log('help', '', '');
+logger.Log('help');
 ```
 
 <span style="display: flex; justify-content: space-around;">

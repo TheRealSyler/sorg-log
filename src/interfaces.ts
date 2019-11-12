@@ -13,14 +13,53 @@ export type LoggerStyle =
       padding?: string;
       margin?: string;
       border?: string;
-      [key: string]: string | undefined;
+      /**
+       * if true the style doesn't get reset in node.
+       */
+      removeResetColorCode?: boolean;
+      [key: string]: boolean | string | undefined;
     };
 
-export type LoggerAcceptableLogTypes = string | number | any[];
+export type LoggerAcceptableLogType = string | number; // | any[] | object;
 
-export type convertedMessage = { message: string; canStyle: boolean };
-export type Converter = (message: LoggerAcceptableLogTypes) => convertedMessage;
-export type Styler = (msg: convertedMessage, style: LoggerStyle, wrapper: LoggerWrapper) => string;
+export interface BrowserContext {
+  styles: LoggerStyle[];
+  index: number;
+  offset: number;
+}
+
+export interface ConverterContext {
+  isObject?: boolean;
+  styled?: boolean;
+  browserContext?: BrowserContext;
+  indentation?: number;
+  typeStyles: LoggerTypeStyles;
+}
+export interface LoggerTypeStyles {
+  /**
+   * Style Applied to any number.
+   */
+  number: LoggerStyle;
+  /**
+   * Style Applied to any string inside of an array or object.
+   */
+  string: LoggerStyle;
+  /**
+   * Style Applied to the brackets of any array or object
+   */
+  bracket: LoggerStyle;
+  /**
+   * Style Applied to the key of any array or object
+   */
+  key: LoggerStyle;
+  /**
+   * Style Applied to the name (constructor) of any array or object
+   */
+  name: LoggerStyle;
+}
+export type ConverterOutput = { message: string; styled: boolean; nodeOnly?: boolean; wrap?: boolean };
+export type Converter = (message: LoggerAcceptableLogType, context: ConverterContext) => ConverterOutput;
+export type Styler = (message: ConverterOutput | string, style: LoggerStyle, wrapper: LoggerWrapper) => string;
 
 export interface LoggerType {
   styles: LoggerStyle[];
@@ -31,11 +70,16 @@ export interface LoggerType {
    */
   customHandler?: CustomHandler;
   enabled?: boolean;
+  /**
+   * Customize styles of arrays, objects, string etc.
+   */
+  typeStyles?: LoggerTypeStyles;
 }
 export type CustomHandlerData = {
-  rawMessages: LoggerAcceptableLogTypes[];
+  rawMessages: LoggerAcceptableLogType[];
   wrappers: LoggerWrapper[];
   styles: LoggerStyle[];
+  typeStyles: LoggerTypeStyles;
 };
 export type CustomHandler = (data: CustomHandlerData, converter: Converter, styler: Styler) => string;
 
