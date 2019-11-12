@@ -1,15 +1,13 @@
-## S.Logger
+## @sorg/log
 
-[![Size](https://badgen.net/bundlephobia/min/s.logger)](https://bundlephobia.com/result?p=s.logger) [![Size](https://badgen.net/packagephobia/install/s.logger)](https://bundlephobia.com/result?p=s.logger) [![Npm](https://img.shields.io/npm/v/s.logger)](https://www.npmjs.com/package/s.logger) [![Npm](https://img.shields.io/github/last-commit/TheRealSyler/s.logger)](https://github.com/TheRealSyler/s.logger)
+[![Size](https://badgen.net/bundlephobia/min/@sorg/log)](https://bundlephobia.com/result?p=@sorg/log) [![Size](https://badgen.net/packagephobia/install/@sorg/log)](https://bundlephobia.com/result?p=@sorg/log) [![Npm](https://img.shields.io/npm/v/@sorg/log)](https://www.npmjs.com/package/@sorg/log) [![Npm](https://img.shields.io/github/last-commit/TheRealSyler/s.log)](https://github.com/TheRealSyler/s.log)
 
-s.loggers purpose is to have colored output in the browser and in node, only supports strings for now.
-
-![](https://raw.githubusercontent.com/TheRealSyler/s.logger/master/images/s.logger.png)
+![](https://raw.githubusercontent.com/TheRealSyler/s.log/master/images/s.logger.png)
 
 #### Usage
 
 ```typescript
-import { Logger, LoggerType } from 's.logger';
+import { Logger, LoggerType } from '@sorg/log';
 
 const logger = new Logger<{ error: LoggerType; info: LoggerType; browserMessage: LoggerType }>({
   error: {
@@ -45,7 +43,7 @@ logger.Log('browserMessage', 'Message');
 ##### Or
 
 ```typescript
-import { Logger, LoggerType } from 's.logger';
+import { Logger, LoggerType } from '@sorg/log';
 
 const logger = new Logger<{ help: LoggerType }>({
   help: {
@@ -71,8 +69,8 @@ logger.Log('help');
 ```
 
 <span style="display: flex; justify-content: space-around;">
-<img src="https://raw.githubusercontent.com/TheRealSyler/s.logger/master/images/arrow.png" style="display: inline;">
-<img src="https://raw.githubusercontent.com/TheRealSyler/s.logger/master/images/arrow.png" style="display: inline;">
+<img src="https://raw.githubusercontent.com/TheRealSyler/s.log/master/images/arrow.png" style="display: inline;">
+<img src="https://raw.githubusercontent.com/TheRealSyler/s.log/master/images/arrow.png" style="display: inline;">
 </span>
 
-![](https://raw.githubusercontent.com/TheRealSyler/s.logger/master/images/logger-ex.png)
+![](https://raw.githubusercontent.com/TheRealSyler/s.log/master/images/logger-ex.png)
