@@ -71,14 +71,13 @@ logger.Log('help');
 ![](https://raw.githubusercontent.com/TheRealSyler/s.log/master/images/logger-ex.png)
 
 <span id="DOC_GENERATION_MARKER_0"></span>
-
 # Docs
 
 - **[interfaces](#interfaces)**
 
   - [LoggerWrapper](#loggerwrapper)
   - [LoggerStyle](#loggerstyle)
-  - [LoggerAcceptableLogType](#loggeracceptablelogtype)
+  - [LogType](#logtype)
   - [BrowserContext](#browsercontext)
   - [ConverterContext](#convertercontext)
   - [LoggerTypeStyles](#loggertypestyles)
@@ -92,6 +91,7 @@ logger.Log('help');
 
 ### interfaces
 
+
 ##### LoggerWrapper
 
 ```typescript
@@ -104,35 +104,33 @@ type LoggerWrapper = [string, string] | undefined | null;
 /**
  * color/background work in node and the browser, the other properties only work in the browser.
  */
-type LoggerStyle =
-  | string
-  | {
-      background?: string;
-      color?: string;
-      padding?: string;
-      margin?: string;
-      border?: string;
-      /**
-       * if true the style doesn't get reset in node.
-       */
-      removeResetColorCode?: boolean;
-      [key: string]: boolean | string | undefined;
-    };
+type LoggerStyle = string | {
+    background?: string;
+    color?: string;
+    padding?: string;
+    margin?: string;
+    border?: string;
+    /**
+     * if true the style doesn't get reset in node.
+     */
+    removeResetColorCode?: boolean;
+    [key: string]: boolean | string | undefined;
+}
 ```
 
-##### LoggerAcceptableLogType
+##### LogType
 
 ```typescript
-type LoggerAcceptableLogType = string | number | any;
+type LogType = string | number | null | undefined | object | any[];
 ```
 
 ##### BrowserContext
 
 ```typescript
 interface BrowserContext {
-  styles: LoggerStyle[];
-  index: number;
-  offset: number;
+    styles: LoggerStyle[];
+    index: number;
+    offset: number;
 }
 ```
 
@@ -140,11 +138,12 @@ interface BrowserContext {
 
 ```typescript
 interface ConverterContext {
-  isObject?: boolean;
-  styled?: boolean;
-  browserContext?: BrowserContext;
-  indentation?: number;
-  typeStyles: LoggerTypeStyles;
+    isObject?: boolean;
+    styled?: boolean;
+    browserContext?: BrowserContext;
+    indentation?: number;
+    index?: number;
+    typeStyles: LoggerTypeStyles;
 }
 ```
 
@@ -152,30 +151,38 @@ interface ConverterContext {
 
 ```typescript
 interface LoggerTypeStyles {
-  /**
-   * Style Applied to any number.
-   */
-  number: LoggerStyle;
-  /**
-   * Style Applied to any string inside of an array or object.
-   */
-  string: LoggerStyle;
-  /**
-   * Style Applied to the brackets of any array or object
-   */
-  bracket: LoggerStyle;
-  /**
-   * Style Applied to the key of any array or object
-   */
-  key: LoggerStyle;
-  /**
-   * Style Applied to the name (constructor) of any array or object
-   */
-  name: LoggerStyle;
-  /**
-   * Style Applied to the null type.
-   */
-  null: LoggerStyle;
+    /**
+     * Style Applied to any number.
+     */
+    number: LoggerStyle;
+    /**
+     * Style Applied to any string inside of an array or object.
+     */
+    string: LoggerStyle;
+    /**
+     * Style Applied to the brackets of any array or object
+     */
+    bracket: LoggerStyle;
+    /**
+     * Style Applied to the key of any array or object
+     */
+    key: LoggerStyle;
+    /**
+     * Style Applied to the name (constructor) of any array or object
+     */
+    name: LoggerStyle;
+    /**
+     * Style Applied to null type.
+     */
+    null: LoggerStyle;
+    /**
+     * Style Applied to undefined type.
+     */
+    undefined: LoggerStyle;
+    /**
+     * Style Applied to empty arrays.
+     */
+    emptyArray: LoggerStyle;
 }
 ```
 
@@ -183,41 +190,41 @@ interface LoggerTypeStyles {
 
 ```typescript
 type ConverterOutput = {
-  message: string;
-  styled: boolean;
-  nodeOnly?: boolean;
-  wrap?: boolean;
-};
+    message: string;
+    styled: boolean;
+    nodeOnly?: boolean;
+    wrap?: boolean;
+}
 ```
 
 ##### Converter
 
 ```typescript
-type Converter = (message: LoggerAcceptableLogType, context: ConverterContext) => ConverterOutput;
+type Converter = (message: LogType, context: ConverterContext) => ConverterOutput;
 ```
 
 ##### Styler
 
 ```typescript
-type Styler = (message: ConverterOutput | string, style: LoggerStyle, wrapper: LoggerWrapper) => string;
+type Styler = (message: ConverterOutput | string, style: LoggerStyle, wrapper?: LoggerWrapper) => string;
 ```
 
 ##### LoggerType
 
 ```typescript
 interface LoggerType {
-  styles?: LoggerStyle[];
-  wrappers?: LoggerWrapper[];
-  preset?: PresetBase;
-  /**
-   * Used to change Messages before they get styled.
-   */
-  customHandler?: CustomHandler;
-  enabled?: boolean;
-  /**
-   * Customize styles of arrays, objects, string etc.
-   */
-  typeStyles?: LoggerTypeStyles;
+    styles?: LoggerStyle[];
+    wrappers?: LoggerWrapper[];
+    preset?: Preset;
+    /**
+     * Used to change Messages before they get styled.
+     */
+    customHandler?: CustomHandler;
+    enabled?: boolean;
+    /**
+     * Customize styles of arrays, objects, string etc.
+     */
+    typeStyles?: LoggerTypeStyles;
 }
 ```
 
@@ -225,11 +232,11 @@ interface LoggerType {
 
 ```typescript
 type CustomHandlerData = {
-  rawMessages: LoggerAcceptableLogType[] | any;
-  wrappers: LoggerWrapper[];
-  styles: LoggerStyle[];
-  typeStyles: LoggerTypeStyles;
-};
+    rawMessages: LogType[];
+    wrappers: LoggerWrapper[];
+    styles: LoggerStyle[];
+    typeStyles: LoggerTypeStyles;
+}
 ```
 
 ##### CustomHandler
@@ -244,5 +251,5 @@ type CustomHandler = (data: CustomHandlerData, converter: Converter, styler: Sty
 type PresetHandler<T> = (preset: T, data: CustomHandlerData) => string;
 ```
 
-_Generated With_ **[ts-doc-gen](https://www.npmjs.com/package/ts-doc-gen)**
+*Generated With* **[ts-doc-gen](https://www.npmjs.com/package/ts-doc-gen)**
 <span id="DOC_GENERATION_MARKER_1"></span>
