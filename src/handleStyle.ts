@@ -1,7 +1,5 @@
 import { stringColorToAnsi256 } from './utils';
-import { LoggerStyle } from './interfaces';
-
-export type LoggerWrapper = [string, string] | undefined | null;
+import { LoggerStyle, LoggerWrapper } from './interfaces';
 
 export function wrap(message: string, wrapper: LoggerWrapper, style?: string, removeResetColorCode = false) {
   return handleStyle(

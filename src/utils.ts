@@ -44,6 +44,5 @@ function ConvertHexString(text: string): [number, number, number] {
   } else {
     color.alpha = 1;
   }
-  console.log(text, [color.red, color.green, color.blue]);
   return [color.red, color.green, color.blue];
 }

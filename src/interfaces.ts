@@ -1,4 +1,4 @@
-import { PresetBase } from './presets';
+import { Preset } from './presets';
 
 export type LoggerWrapper = [string, string] | undefined | null;
 
@@ -20,7 +20,7 @@ export type LoggerStyle =
       [key: string]: boolean | string | undefined;
     };
 
-export type LoggerAcceptableLogType = string | number; // | any[] | object;
+export type LogType = string | number | null | undefined | object | any[];
 
 export interface BrowserContext {
   styles: LoggerStyle[];
@@ -33,6 +33,7 @@ export interface ConverterContext {
   styled?: boolean;
   browserContext?: BrowserContext;
   indentation?: number;
+  index?: number;
   typeStyles: LoggerTypeStyles;
 }
 export interface LoggerTypeStyles {
@@ -56,15 +57,27 @@ export interface LoggerTypeStyles {
    * Style Applied to the name (constructor) of any array or object
    */
   name: LoggerStyle;
+  /**
+   * Style Applied to null type.
+   */
+  null: LoggerStyle;
+  /**
+   * Style Applied to undefined type.
+   */
+  undefined: LoggerStyle;
+  /**
+   * Style Applied to empty arrays.
+   */
+  emptyArray: LoggerStyle;
 }
 export type ConverterOutput = { message: string; styled: boolean; nodeOnly?: boolean; wrap?: boolean };
-export type Converter = (message: LoggerAcceptableLogType, context: ConverterContext) => ConverterOutput;
-export type Styler = (message: ConverterOutput | string, style: LoggerStyle, wrapper: LoggerWrapper) => string;
+export type Converter = (message: LogType, context: ConverterContext) => ConverterOutput;
+export type Styler = (message: ConverterOutput | string, style: LoggerStyle, wrapper?: LoggerWrapper) => string;
 
 export interface LoggerType {
-  styles: LoggerStyle[];
+  styles?: LoggerStyle[];
   wrappers?: LoggerWrapper[];
-  preset?: PresetBase;
+  preset?: Preset;
   /**
    * Used to change Messages before they get styled.
    */
@@ -76,7 +89,7 @@ export interface LoggerType {
   typeStyles?: LoggerTypeStyles;
 }
 export type CustomHandlerData = {
-  rawMessages: LoggerAcceptableLogType[];
+  rawMessages: LogType[];
   wrappers: LoggerWrapper[];
   styles: LoggerStyle[];
   typeStyles: LoggerTypeStyles;

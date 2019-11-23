@@ -2,13 +2,13 @@ import { PresetHandler, CustomHandlerData, ConverterOutput } from './interfaces'
 import { converter } from './converter';
 import { styler } from './styler';
 
-export class PresetBase {
+export class Preset {
   constructor(private func: PresetHandler<any>) {}
   Use(data: CustomHandlerData) {
     return this.func(this, data);
   }
 }
-export class PresetNodeHelp extends PresetBase {
+export class PresetNodeHelp extends Preset {
   constructor(
     public text?: string,
     public splitter = ';',
@@ -42,7 +42,7 @@ const nodeHelpMessage: PresetHandler<PresetNodeHelp> = (preset, data) => {
   } else {
     const messages: ConverterOutput[] = [];
     for (let i = 0; i < data.rawMessages.length; i++) {
-      messages.push(converter(data.rawMessages[i], { typeStyles: data.typeStyles }));
+      messages.push(converter(data.rawMessages[i], { typeStyles: data.typeStyles, index: i }));
     }
 
     const lastIndex = messages.length - 1;

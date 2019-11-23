@@ -1,25 +1,31 @@
 import { isBrowser } from './utils';
-import { LoggerWrapper, createBrowserStyle } from './handleStyle';
+import { createBrowserStyle } from './handleStyle';
 import {
   LoggerType,
-  LoggerAcceptableLogType,
+  LogType,
   BrowserContext,
   LoggerTypeStyles,
   CustomHandlerData,
-  LoggerStyle
+  LoggerStyle,
+  LoggerWrapper
 } from './interfaces';
 import { converter } from './converter';
 import { styler } from './styler';
 
+export { converter } from './converter';
+export { styler } from './styler';
 export { LoggerType } from './interfaces';
 export { PresetNodeHelp } from './presets';
 
 const defaultStyles: LoggerTypeStyles = {
   bracket: '#fa4',
-  key: '#0a1',
+  key: '#0c1',
   number: '#0AA',
-  string: '#f41',
-  name: '#fff'
+  string: '#f64',
+  name: '#fff',
+  null: '#06f',
+  undefined: '#06f',
+  emptyArray: '#06f'
 };
 
 interface LoggerTypes {
@@ -31,23 +37,24 @@ export class Logger<T extends LoggerTypes> {
       if (types.hasOwnProperty(key)) {
         const type = types[key];
         type.enabled = type.enabled === false ? false : true;
-        if (isBrowser) {
+        if (isBrowser && type.styles) {
           type.styles = type.styles.map(style => createBrowserStyle(style));
         }
       }
     }
   }
-  Log(type: keyof T, ...messages: LoggerAcceptableLogType[]) {
+  Log(type: keyof T, ...messages: LogType[]) {
     if (this.types[type].enabled) {
       const _typeStyles = this.types[type].typeStyles;
       const typeStyles = _typeStyles ? _typeStyles : defaultStyles;
-
+      const _styles = this.types[type].styles;
+      const styles: LoggerStyle[] = _styles ? _styles : [];
       const browserContext: BrowserContext | undefined = isBrowser
-        ? { styles: cleanBrowserStyles(messages, typeStyles, ...this.types[type].styles), index: 0, offset: 0 }
+        ? { styles: cleanBrowserStyles(messages, typeStyles, ...styles), index: 0, offset: 0 }
         : undefined;
 
       const wrappers = (this.types[type].wrappers === undefined ? [] : this.types[type].wrappers) as LoggerWrapper[];
-      const data: CustomHandlerData = { rawMessages: messages, styles: this.types[type].styles, wrappers, typeStyles };
+      const data: CustomHandlerData = { rawMessages: messages, styles, wrappers, typeStyles };
       let msg = '';
       const preset = this.types[type].preset;
       if (preset !== undefined) {
@@ -61,11 +68,7 @@ export class Logger<T extends LoggerTypes> {
             if (browserContext) {
               browserContext.index = i;
             }
-            msg += styler(
-              converter(messages[i], { browserContext, typeStyles }),
-              this.types[type].styles[i],
-              wrappers[i]
-            );
+            msg += styler(converter(messages[i], { browserContext, typeStyles, index: i }), styles[i], wrappers[i]);
           }
         }
       }
@@ -82,11 +85,7 @@ export class Logger<T extends LoggerTypes> {
     this.types[type].enabled = val;
   }
 }
-function cleanBrowserStyles(
-  messages: LoggerAcceptableLogType[],
-  typeStyles: LoggerTypeStyles,
-  ...styles: LoggerStyle[]
-) {
+function cleanBrowserStyles(messages: LogType[], typeStyles: LoggerTypeStyles, ...styles: LoggerStyle[]) {
   for (let i = 0; i < messages.length; i++) {
     if (typeof messages[i] !== 'string') {
       styles.splice(i, 0, 'PLACEHOLDER');

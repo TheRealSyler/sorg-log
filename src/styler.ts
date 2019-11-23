@@ -1,8 +1,12 @@
-import { LoggerWrapper, wrap, getNodeStyle } from './handleStyle';
+import { wrap, getNodeStyle } from './handleStyle';
 import { isBrowser } from './utils';
-import { Styler, ConverterOutput, LoggerStyle } from './interfaces';
+import { Styler, ConverterOutput, LoggerStyle, LoggerWrapper } from './interfaces';
 
-export const styler: Styler = (input: ConverterOutput | string, style: LoggerStyle, wrapper: LoggerWrapper) => {
+export const styler: Styler = (
+  input: ConverterOutput | string,
+  style: LoggerStyle | undefined,
+  wrapper: LoggerWrapper
+) => {
   if (typeof input === 'string') {
     input = { message: input, styled: false };
   }
