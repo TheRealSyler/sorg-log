@@ -12,6 +12,7 @@ import {
 import { converter } from './converter';
 import { styler } from './styler';
 
+export { SetLoggerEnvironment as SetEnvironment } from './utils';
 export { converter } from './converter';
 export { styler } from './styler';
 export { LoggerType } from './interfaces';
@@ -62,7 +63,7 @@ export class Logger<T extends LoggerTypes> {
       } else {
         const CustomHandler = this.types[type].customHandler;
         if (CustomHandler !== undefined) {
-          msg = CustomHandler(data, converter, styler);
+          msg = CustomHandler(data);
         } else {
           for (let i = 0; i < messages.length; i++) {
             if (browserContext) {

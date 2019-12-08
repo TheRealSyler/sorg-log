@@ -94,6 +94,6 @@ export type CustomHandlerData = {
   styles: LoggerStyle[];
   typeStyles: LoggerTypeStyles;
 };
-export type CustomHandler = (data: CustomHandlerData, converter: Converter, styler: Styler) => string;
+export type CustomHandler = (data: CustomHandlerData) => string;
 
 export type PresetHandler<T> = (preset: T, data: CustomHandlerData) => string;

@@ -1,7 +1,12 @@
 import { StringToRGB } from 's.color';
 
-export const isBrowser = typeof window !== 'undefined' && typeof window.document !== 'undefined';
-
+export let isBrowser = typeof window !== 'undefined' && typeof window.document !== 'undefined';
+/**
+ * Can be used to change the assumed environment
+ */
+export function SetLoggerEnvironment(env: 'node' | 'browser') {
+  isBrowser = env === 'browser';
+}
 export function stringColorToAnsi256(color?: string) {
   if (!color) {
     return undefined;
