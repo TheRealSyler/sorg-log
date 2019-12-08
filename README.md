@@ -242,7 +242,7 @@ type CustomHandlerData = {
 ##### CustomHandler
 
 ```typescript
-type CustomHandler = (data: CustomHandlerData, converter: Converter, styler: Styler) => string;
+type CustomHandler = (data: CustomHandlerData) => string;
 ```
 
 ##### PresetHandler
