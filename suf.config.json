@@ -6,7 +6,7 @@
     "out": "README.md",
     "badges": [
       "circleci circleci",
-      "badge=https://www.codefactor.io/repository/github/therealsyler/s.log/badge link=https://www.codefactor.io/repository/github/therealsyler/s.log",
+      "badge=https://codecov.io/gh/TheRealSyler/s.log/branch/master/graph/badge.svg link=https://codecov.io/gh/TheRealSyler/s.log",
       "npmV npm ?color=green",
       "min bundle",
       "install package",

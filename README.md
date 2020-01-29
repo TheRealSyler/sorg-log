@@ -1,7 +1,7 @@
 ## @sorg/log
 
 <span id="BADGE_GENERATION_MARKER_0"></span>
-[![circleci](https://img.shields.io/circleci/build/github/TheRealSyler/s.log)](https://app.circleci.com/github/TheRealSyler/s.log/pipelines) [![Custom](https://www.codefactor.io/repository/github/therealsyler/s.log/badge)](https://www.codefactor.io/repository/github/therealsyler/s.log) [![npmV](https://img.shields.io/npm/v/@sorg/log?color=green)](https://www.npmjs.com/package/@sorg/log) [![min](https://img.shields.io/bundlephobia/min/@sorg/log)](https://bundlephobia.com/result?p=@sorg/log) [![install](https://badgen.net/packagephobia/install/@sorg/log)](https://packagephobia.now.sh/result?p=@sorg/log) [![githubLastCommit](https://img.shields.io/github/last-commit/TheRealSyler/s.log)](https://github.com/TheRealSyler/s.log)
+[![circleci](https://img.shields.io/circleci/build/github/TheRealSyler/s.log)](https://app.circleci.com/github/TheRealSyler/s.log/pipelines) [![Custom](https://codecov.io/gh/TheRealSyler/s.log/branch/master/graph/badge.svg)](https://codecov.io/gh/TheRealSyler/s.log) [![npmV](https://img.shields.io/npm/v/@sorg/log?color=green)](https://www.npmjs.com/package/@sorg/log) [![min](https://img.shields.io/bundlephobia/min/@sorg/log)](https://bundlephobia.com/result?p=@sorg/log) [![install](https://badgen.net/packagephobia/install/@sorg/log)](https://packagephobia.now.sh/result?p=@sorg/log) [![githubLastCommit](https://img.shields.io/github/last-commit/TheRealSyler/s.log)](https://github.com/TheRealSyler/s.log)
 <span id="BADGE_GENERATION_MARKER_1"></span>
 
 ![](https://raw.githubusercontent.com/TheRealSyler/s.log/master/images/s.logger.png)
