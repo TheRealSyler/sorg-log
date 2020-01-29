@@ -1,11 +1,14 @@
 {
   "name": "@sorg/log",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc -b && tdg --include 'interfaces'",
-    "prepack": "npm run build"
+    "prepack": "npm run build && npm test && suf",
+    "build": "tsc -b",
+    "watch": "tsc -w",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch --coverage"
   },
   "files": [
     "dist"
@@ -20,11 +23,34 @@
   "author": "Syler",
   "license": "MIT",
   "devDependencies": {
-    "ts-doc-gen": "^0.2.0",
-    "tslib": "^1.10.0",
+    "@types/jest": "^25.1.0",
+    "jest": "^25.1.0",
+    "ts-jest": "^25.0.0",
+    "suf-cli": "^0.1.0",
     "typescript": "^3.7.2"
   },
   "dependencies": {
-    "s.color": "^0.0.11"
+    "csstype": "^2.6.8",
+    "s.color": "^0.0.11",
+    "tslib": "^1.10.0"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json",
+      "jsx",
+      "node"
+    ],
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    }
   }
 }

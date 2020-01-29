@@ -1,6 +1,8 @@
 ## @sorg/log
 
-[![Size](https://badgen.net/bundlephobia/min/@sorg/log)](https://bundlephobia.com/result?p=@sorg/log) [![Size](https://badgen.net/packagephobia/install/@sorg/log)](https://bundlephobia.com/result?p=@sorg/log) [![Npm](https://img.shields.io/npm/v/@sorg/log)](https://www.npmjs.com/package/@sorg/log) [![Npm](https://img.shields.io/github/last-commit/TheRealSyler/s.log)](https://github.com/TheRealSyler/s.log)
+<span id="BADGE_GENERATION_MARKER_0"></span>
+[![circleci](https://img.shields.io/circleci/build/github/TheRealSyler/s.log)](https://app.circleci.com/github/TheRealSyler/s.log/pipelines) [![Custom](https://www.codefactor.io/repository/github/therealsyler/s.log/badge)](https://www.codefactor.io/repository/github/therealsyler/s.log) [![npmV](https://img.shields.io/npm/v/@sorg/log?color=green)](https://www.npmjs.com/package/@sorg/log) [![min](https://img.shields.io/bundlephobia/min/@sorg/log)](https://bundlephobia.com/result?p=@sorg/log) [![install](https://badgen.net/packagephobia/install/@sorg/log)](https://packagephobia.now.sh/result?p=@sorg/log) [![githubLastCommit](https://img.shields.io/github/last-commit/TheRealSyler/s.log)](https://github.com/TheRealSyler/s.log)
+<span id="BADGE_GENERATION_MARKER_1"></span>
 
 ![](https://raw.githubusercontent.com/TheRealSyler/s.log/master/images/s.logger.png)
 
@@ -71,6 +73,7 @@ logger.Log('help');
 ![](https://raw.githubusercontent.com/TheRealSyler/s.log/master/images/logger-ex.png)
 
 <span id="DOC_GENERATION_MARKER_0"></span>
+
 # Docs
 
 - **[interfaces](#interfaces)**
@@ -91,7 +94,6 @@ logger.Log('help');
 
 ### interfaces
 
-
 ##### LoggerWrapper
 
 ```typescript
@@ -110,11 +112,11 @@ type LoggerStyle = string | {
     padding?: string;
     margin?: string;
     border?: string;
-    /**
-     * if true the style doesn't get reset in node.
-     */
+    /** for bold text in node add the value 'bold' */
+    'font-weight'?: FontWeightProperty;
+    /** if true the style doesn't get reset in node. */
     removeResetColorCode?: boolean;
-    [key: string]: boolean | string | undefined;
+    [key: string]: number | boolean | string | undefined;
 }
 ```
 
@@ -151,37 +153,21 @@ interface ConverterContext {
 
 ```typescript
 interface LoggerTypeStyles {
-    /**
-     * Style Applied to any number.
-     */
+    /** Style Applied to any number. */
     number: LoggerStyle;
-    /**
-     * Style Applied to any string inside of an array or object.
-     */
+    /** Style Applied to any string inside of an array or object. */
     string: LoggerStyle;
-    /**
-     * Style Applied to the brackets of any array or object
-     */
+    /** Style Applied to the brackets of any array or object */
     bracket: LoggerStyle;
-    /**
-     * Style Applied to the key of any array or object
-     */
+    /** Style Applied to the key of any array or object */
     key: LoggerStyle;
-    /**
-     * Style Applied to the name (constructor) of any array or object
-     */
+    /** * Style Applied to the name (constructor) of any array or object */
     name: LoggerStyle;
-    /**
-     * Style Applied to null type.
-     */
+    /** Style Applied to null type. */
     null: LoggerStyle;
-    /**
-     * Style Applied to undefined type.
-     */
+    /** Style Applied to undefined type. */
     undefined: LoggerStyle;
-    /**
-     * Style Applied to empty arrays.
-     */
+    /** Style Applied to empty arrays. */
     emptyArray: LoggerStyle;
 }
 ```
@@ -251,5 +237,11 @@ type CustomHandler = (data: CustomHandlerData) => string;
 type PresetHandler<T> = (preset: T, data: CustomHandlerData) => string;
 ```
 
-*Generated With* **[ts-doc-gen](https://www.npmjs.com/package/ts-doc-gen)**
+_Generated with_ **[suf-cli](https://www.npmjs.com/package/suf-cli)**
 <span id="DOC_GENERATION_MARKER_1"></span>
+
+### License
+
+<span id="LICENSE_GENERATION_MARKER_0"></span>
+Copyright (c) 2020 Leonard Grosoli Licensed under the MIT license.
+<span id="LICENSE_GENERATION_MARKER_1"></span>

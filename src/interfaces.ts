@@ -1,4 +1,5 @@
 import { Preset } from './presets';
+import { FontWeightProperty } from 'csstype';
 
 export type LoggerWrapper = [string, string] | undefined | null;
 
@@ -13,11 +14,11 @@ export type LoggerStyle =
       padding?: string;
       margin?: string;
       border?: string;
-      /**
-       * if true the style doesn't get reset in node.
-       */
+      /** for bold text in node add the value 'bold' */
+      'font-weight'?: FontWeightProperty;
+      /** if true the style doesn't get reset in node. */
       removeResetColorCode?: boolean;
-      [key: string]: boolean | string | undefined;
+      [key: string]: number | boolean | string | undefined;
     };
 
 export type LogType = string | number | null | undefined | object | any[];
@@ -37,42 +38,42 @@ export interface ConverterContext {
   typeStyles: LoggerTypeStyles;
 }
 export interface LoggerTypeStyles {
-  /**
-   * Style Applied to any number.
-   */
+  /** Style Applied to any number. */
   number: LoggerStyle;
-  /**
-   * Style Applied to any string inside of an array or object.
-   */
+
+  /** Style Applied to any string inside of an array or object. */
   string: LoggerStyle;
-  /**
-   * Style Applied to the brackets of any array or object
-   */
+
+  /** Style Applied to the brackets of any array or object */
   bracket: LoggerStyle;
-  /**
-   * Style Applied to the key of any array or object
-   */
+
+  /** Style Applied to the key of any array or object */
   key: LoggerStyle;
-  /**
-   * Style Applied to the name (constructor) of any array or object
-   */
+
+  /** * Style Applied to the name (constructor) of any array or object */
   name: LoggerStyle;
-  /**
-   * Style Applied to null type.
-   */
+
+  /** Style Applied to null type. */
   null: LoggerStyle;
-  /**
-   * Style Applied to undefined type.
-   */
+
+  /** Style Applied to undefined type. */
   undefined: LoggerStyle;
-  /**
-   * Style Applied to empty arrays.
-   */
+
+  /** Style Applied to empty arrays. */
   emptyArray: LoggerStyle;
 }
-export type ConverterOutput = { message: string; styled: boolean; nodeOnly?: boolean; wrap?: boolean };
+export type ConverterOutput = {
+  message: string;
+  styled: boolean;
+  nodeOnly?: boolean;
+  wrap?: boolean;
+};
 export type Converter = (message: LogType, context: ConverterContext) => ConverterOutput;
-export type Styler = (message: ConverterOutput | string, style: LoggerStyle, wrapper?: LoggerWrapper) => string;
+export type Styler = (
+  message: ConverterOutput | string,
+  style: LoggerStyle,
+  wrapper?: LoggerWrapper
+) => string;
 
 export interface LoggerType {
   styles?: LoggerStyle[];

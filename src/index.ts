@@ -17,6 +17,7 @@ export { converter } from './converter';
 export { styler } from './styler';
 export { LoggerType } from './interfaces';
 export { PresetNodeHelp } from './presets';
+export * from './loggers';
 
 const defaultStyles: LoggerTypeStyles = {
   bracket: '#fa4',
@@ -32,6 +33,8 @@ const defaultStyles: LoggerTypeStyles = {
 interface LoggerTypes {
   [key: string]: LoggerType;
 }
+
+// TODO Remove or Refactor the Logger class.
 export class Logger<T extends LoggerTypes> {
   constructor(public types: T) {
     for (const key in types) {
@@ -54,7 +57,10 @@ export class Logger<T extends LoggerTypes> {
         ? { styles: cleanBrowserStyles(messages, typeStyles, ...styles), index: 0, offset: 0 }
         : undefined;
 
-      const wrappers = (this.types[type].wrappers === undefined ? [] : this.types[type].wrappers) as LoggerWrapper[];
+      const wrappers = (this.types[type].wrappers === undefined
+        ? []
+        : this.types[type].wrappers) as LoggerWrapper[];
+
       const data: CustomHandlerData = { rawMessages: messages, styles, wrappers, typeStyles };
       let msg = '';
       const preset = this.types[type].preset;
@@ -69,7 +75,11 @@ export class Logger<T extends LoggerTypes> {
             if (browserContext) {
               browserContext.index = i;
             }
-            msg += styler(converter(messages[i], { browserContext, typeStyles, index: i }), styles[i], wrappers[i]);
+            msg += styler(
+              converter(messages[i], { browserContext, typeStyles, index: i }),
+              styles[i],
+              wrappers[i]
+            );
           }
         }
       }
@@ -86,7 +96,11 @@ export class Logger<T extends LoggerTypes> {
     this.types[type].enabled = val;
   }
 }
-function cleanBrowserStyles(messages: LogType[], typeStyles: LoggerTypeStyles, ...styles: LoggerStyle[]) {
+function cleanBrowserStyles(
+  messages: LogType[],
+  typeStyles: LoggerTypeStyles,
+  ...styles: LoggerStyle[]
+) {
   for (let i = 0; i < messages.length; i++) {
     if (typeof messages[i] !== 'string') {
       styles.splice(i, 0, 'PLACEHOLDER');

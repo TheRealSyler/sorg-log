@@ -2,8 +2,14 @@ import { PresetHandler, CustomHandlerData, ConverterOutput } from './interfaces'
 import { converter } from './converter';
 import { styler } from './styler';
 
+// TODO REMOVE Presets
+
 export class Preset {
-  constructor(private func: PresetHandler<any>) {}
+  constructor(private func: PresetHandler<any>) {
+    console.log(
+      '\x1b[38;2;255;0;0m[@sorg/log]: Presets Are Deprecated\x1b[m (go and remove them NOW)'
+    );
+  }
   Use(data: CustomHandlerData) {
     return this.func(this, data);
   }
@@ -49,14 +55,18 @@ const nodeHelpMessage: PresetHandler<PresetNodeHelp> = (preset, data) => {
     if (messages.length > 1) {
       const space = preset.firstColumnWidth - messages[0].message.length;
       if (space >= 0) {
-        messages[0].message = messages[0].message.replace(/^(\n)?/, '$1 ').concat(' '.repeat(space));
+        messages[0].message = messages[0].message
+          .replace(/^(\n)?/, '$1 ')
+          .concat(' '.repeat(space));
       }
 
       let concatenatedMessages: string = '';
       for (let i = 1; i < messages.length; i++) {
         concatenatedMessages += messages[i].message;
       }
-      const endingSpace = preset.secondColumnWidth - (concatenatedMessages.length + (messages.length - 1) * 2);
+      const endingSpace =
+        preset.secondColumnWidth - (concatenatedMessages.length + (messages.length - 1) * 2);
+
       if (endingSpace >= 0) {
         messages[lastIndex].message = messages[lastIndex].message.concat(' '.repeat(endingSpace));
       }

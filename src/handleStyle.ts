@@ -1,9 +1,16 @@
-import { stringColorToAnsi256 } from './utils';
+import { stringColorToAnsiColor } from './utils';
 import { LoggerStyle, LoggerWrapper } from './interfaces';
 
-export function wrap(message: string, wrapper: LoggerWrapper, style?: string, removeResetColorCode = false) {
+export function WrapStyle(
+  message: string,
+  wrapper: LoggerWrapper,
+  style?: string,
+  removeResetColorCode = false
+) {
   return handleStyle(
-    `${wrapper && wrapper[0] ? wrapper[0] : ''}${message}${wrapper && wrapper[1] ? wrapper[1] : ''}`,
+    `${wrapper && wrapper[0] ? wrapper[0] : ''}${message}${
+      wrapper && wrapper[1] ? wrapper[1] : ''
+    }`,
     style,
     removeResetColorCode
   );
@@ -13,28 +20,35 @@ function handleStyle(msg: string, style: string | undefined, removeResetColorCod
     if (removeResetColorCode) {
       return `${style}${msg}`;
     }
-    return getColorCode('reset', `${style}${msg}`);
+    return getANSICode('reset', `${style}${msg}`);
   }
   return msg;
 }
 
 export function getNodeStyle(style: LoggerStyle) {
   if (typeof style === 'string') {
-    return { color: getColorCode('color', stringColorToAnsi256(style)), background: '' };
+    return {
+      color: getANSICode('color', stringColorToAnsiColor(style)),
+      background: '',
+      bold: ''
+    };
   } else {
     return {
-      color: getColorCode('color', stringColorToAnsi256(style.color)),
-      background: getColorCode('background', stringColorToAnsi256(style.background))
+      bold: style['font-weight'] === 'bold' ? getANSICode('bold') : '',
+      color: getANSICode('color', stringColorToAnsiColor(style.color)),
+      background: getANSICode('background', stringColorToAnsiColor(style.background))
     };
   }
 }
 
-function getColorCode(type: 'color' | 'background' | 'reset', color?: number | string) {
+function getANSICode(type: 'color' | 'background' | 'reset' | 'bold', color?: number | string) {
   switch (type) {
     case 'color':
-      return color !== undefined ? `\u001B[38;5;${color}m` : '';
+      return color !== undefined ? `\u001B[38;${color}m` : '';
     case 'background':
-      return color !== undefined ? `\u001B[48;5;${color}m` : '';
+      return color !== undefined ? `\u001B[48;${color}m` : '';
+    case 'bold':
+      return `\u001B[1m`;
     case 'reset':
       return color !== undefined ? `${color}\u001b[0m` : '';
   }

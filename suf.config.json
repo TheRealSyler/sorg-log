@@ -1,0 +1,29 @@
+{
+  "badges": {
+    "name": "@sorg/log",
+    "github": "TheRealSyler",
+    "repo": "s.log",
+    "out": "README.md",
+    "badges": [
+      "circleci circleci",
+      "badge=https://www.codefactor.io/repository/github/therealsyler/s.log/badge link=https://www.codefactor.io/repository/github/therealsyler/s.log",
+      "npmV npm ?color=green",
+      "min bundle",
+      "install package",
+      "githubLastCommit github"
+    ]
+  },
+  "tsDoc": {
+    "title": "Docs",
+    "dir": "dist",
+    "out": "README.md",
+    "include": "interfaces"
+  },
+  "license": {
+    "name": "Leonard Grosoli",
+    "type": "mit",
+    "year": "2020",
+    "out": "README.md",
+    "file": "LICENSE"
+  }
+}

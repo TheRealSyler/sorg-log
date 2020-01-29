@@ -1,4 +1,4 @@
-import { wrap, getNodeStyle } from './handleStyle';
+import { WrapStyle, getNodeStyle } from './handleStyle';
 import { isBrowser } from './utils';
 import { Styler, ConverterOutput, LoggerStyle, LoggerWrapper } from './interfaces';
 
@@ -13,23 +13,23 @@ export const styler: Styler = (
 
   if (input.styled || (isBrowser && input.nodeOnly)) {
     if (input.wrap) {
-      return `${wrap(input.message, wrapper)}`;
+      return `${WrapStyle(input.message, wrapper)}`;
     }
     return input.message;
   } else {
     if (isBrowser) {
-      return `%c${wrap(input.message, wrapper)}`;
+      return `%c${WrapStyle(input.message, wrapper)}`;
     } else {
       if (style) {
         const NodeStyle = getNodeStyle(style);
-        return wrap(
+        return WrapStyle(
           input.message,
           wrapper,
-          `${NodeStyle.color}${NodeStyle.background}`,
+          `${NodeStyle.color}${NodeStyle.background}${NodeStyle.bold}`,
           typeof style !== 'string' ? style.removeResetColorCode : false
         );
       } else {
-        return wrap(input.message, wrapper);
+        return WrapStyle(input.message, wrapper);
       }
     }
   }
