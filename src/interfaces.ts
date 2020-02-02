@@ -17,7 +17,9 @@ export type LogStyle =
       [key: string]: number | boolean | string | undefined;
     };
 
-export type ConverterInput = string | number | null | undefined | object | Array<ConverterInput>;
+type AcceptableTypes = string | number | null | undefined | object;
+
+export type ConverterInput = AcceptableTypes | Array<AcceptableTypes>;
 
 // REVIEW What is BrowserContext? and is it useful?
 // export interface BrowserContext {

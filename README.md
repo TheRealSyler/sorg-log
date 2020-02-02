@@ -48,7 +48,7 @@ type LogStyle = string | {
 ##### ConverterInput
 
 ```typescript
-type ConverterInput = string | number | null | undefined | object | Array<ConverterInput>;
+type ConverterInput = AcceptableTypes | Array<AcceptableTypes>;
 ```
 
 ##### LogMessage
