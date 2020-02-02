@@ -2,11 +2,12 @@ import { LogTable, Log } from '../loggers';
 import { styler } from '../styler';
 import { SetLoggerEnvironment } from '../utils';
 // import { converter } from '../converter';
+import { JestStoreLog } from 'jest-store-log';
 
 SetLoggerEnvironment('node');
 
 test('Log Table', () => {
-  const log = new StoreLog();
+  const log = new JestStoreLog();
 
   const num = (n: string | number) => styler(`${n}`, '#0f0');
   const ms = styler('ms', '#f00');
@@ -22,7 +23,7 @@ test('Log Table', () => {
 });
 
 test('Log Function (Node)', () => {
-  const log = new StoreLog();
+  const log = new JestStoreLog();
 
   Log(
     { message: 'a', style: '#f00' },
@@ -39,34 +40,3 @@ test('Log Function (Node)', () => {
   );
   log.TestEnd();
 });
-
-// test('Converter', () => {
-//   const log = new StoreLog();
-
-//   Log(converter({ wd: 'awd', a: [23, null, undefined] }).message);
-
-//   expect(log.data).toBe(
-//     `Object {
-//   wd: awd  a:
-// Array [
-//      0: 23
-//      1: null
-//      2: undefined
-// ]}`
-//   );
-//   log.TestEnd();
-// });
-
-class StoreLog {
-  data = '';
-  private oldConsoleLog = console['log'];
-  constructor() {
-    console['log'] = jest.fn(this.Store);
-  }
-
-  Store = (inputs: string) => (this.data += inputs);
-
-  TestEnd() {
-    console.log = this.oldConsoleLog;
-  }
-}
