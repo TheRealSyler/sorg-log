@@ -1,13 +1,12 @@
-import { LogTable } from '../loggers';
+import { LogTable, Log } from '../loggers';
 import { styler } from '../styler';
 import { SetLoggerEnvironment } from '../utils';
-import { Logger } from '..';
-import { LoggerType } from '../interfaces';
+// import { converter } from '../converter';
 
 SetLoggerEnvironment('node');
 
 test('Log Table', () => {
-  const log = new Log();
+  const log = new StoreLog();
 
   const num = (n: string | number) => styler(`${n}`, '#0f0');
   const ms = styler('ms', '#f00');
@@ -18,26 +17,47 @@ test('Log Table', () => {
   ]);
   LogTable([]); // added for codecov
   expect(log.data).toBe(`  b   c 
-1 \x1b[38;2;0;255;0m2\x1b[0m\x1b[38;2;255;0;0mms\x1b[0m 3 `);
+1 \x1b[38;2;0;255;0m2\x1b[0;m\x1b[38;2;255;0;0mms\x1b[0;m 3 `);
   log.TestEnd();
 });
 
-// test('Logger', () => {
-//   const log = new Log();
+test('Log Function (Node)', () => {
+  const log = new StoreLog();
 
-//   const logger = new Logger<{ test: LoggerType }>({
-//     test: {
-//       styles: ['#000'],
-//       wrappers: [['', ':']]
-//     }
-//   });
+  Log(
+    { message: 'a', style: '#f00' },
+    'b',
+    { message: 'c for codecov' },
+    {
+      message: 'd',
+      style: { 'font-weight': 'bold', background: 'blue' }
+    }
+  );
 
-//   logger.Log('test', 'a', 'b');
-//   expect(log.data).toBe(`\x1b[38;2;0;0;0ma\x1b[0m:\x1b[38;2;0;0;0mb\x1b[0m`);
+  expect(log.data).toBe(
+    `\x1b[38;2;255;0;0ma\x1b[0;m b c for codecov \x1b[1;48;2;0;0;255md\x1b[0;m`
+  );
+  log.TestEnd();
+});
+
+// test('Converter', () => {
+//   const log = new StoreLog();
+
+//   Log(converter({ wd: 'awd', a: [23, null, undefined] }).message);
+
+//   expect(log.data).toBe(
+//     `Object {
+//   wd: awd  a:
+// Array [
+//      0: 23
+//      1: null
+//      2: undefined
+// ]}`
+//   );
 //   log.TestEnd();
 // });
 
-class Log {
+class StoreLog {
   data = '';
   private oldConsoleLog = console['log'];
   constructor() {

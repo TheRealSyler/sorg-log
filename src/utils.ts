@@ -1,4 +1,5 @@
 import { StringToRGB } from 's.color';
+import { LogStyle, LogTable } from './interfaces';
 
 export let isBrowser = typeof window !== 'undefined' && typeof window.document !== 'undefined';
 /**
@@ -7,29 +8,72 @@ export let isBrowser = typeof window !== 'undefined' && typeof window.document !
 export function SetLoggerEnvironment(env: 'node' | 'browser') {
   isBrowser = env === 'browser';
 }
-export function stringColorToAnsiColor(color?: string) {
+export function stringColorToAnsiColor(type: 'background' | 'color', color?: string) {
   if (!color) {
     return undefined;
   }
   const { r, g, b } = StringToRGB(color, true);
 
-  // CONVERT TO ANSI 256
-  // if (r === g && g === b) {
-  //   if (r < 8) {
-  //     return 16;
-  //   }
-  //   if (r > 248) {
-  //     return 231;
-  //   }
-
-  //   return Math.round(((r - 8) / 247) * 24) + 232;
-  // }
-
-  // const ansi =
-  //   16 + 36 * Math.round((r / 255) * 5) + 6 * Math.round((g / 255) * 5) + Math.round((b / 255) * 5);
-
-  return `2;${r};${g};${b}`;
+  return `${ANSICodes(type)}2;${r};${g};${b};`;
 }
+
+export function ANSICodes(type: 'background' | 'color' | 'bold' | 'reset') {
+  switch (type) {
+    case 'reset':
+      return '0;';
+    case 'bold':
+      return '1;';
+    case 'color':
+      return '38;';
+    case 'background':
+      return '48;';
+  }
+}
+
+export function getBrowserStyle(style?: LogStyle): LogStyle {
+  if (typeof style === 'string') {
+    return { color: style };
+  }
+  return style ? style : '';
+}
+
+export function getMaxLength(column: LogTable[0]) {
+  let max = 0;
+  for (let i = 0; i < column.length; i++) {
+    const field = column[i];
+    if (field) {
+      const length = replaceStyles(field).length;
+      max = length > max ? length : max;
+    }
+  }
+  return max;
+}
+
+export function replaceStyles(item: string | number) {
+  return item.toString().replace(/[\033\x1b\u001b]\[.*?m/g, '');
+}
+
+export function getColumn(matrix: LogTable, col: number) {
+  return matrix.map(row => row[col]);
+}
+
+// function convertToANSI256Color(color: string) {
+//   const { r, g, b } = StringToRGB(color, true);
+//   if (r === g && g === b) {
+//     if (r < 8) {
+//       return 16;
+//     }
+//     if (r > 248) {
+//       return 231;
+//     }
+
+//     return Math.round(((r - 8) / 247) * 24) + 232;
+//   }
+
+//   return (
+//     16 + 36 * Math.round((r / 255) * 5) + 6 * Math.round((g / 255) * 5) + Math.round((b / 255) * 5)
+//   );
+// }
 
 // function ConvertHexString(text: string): [number, number, number] {
 //   let color = { red: 0, green: 0, blue: 0, alpha: 0 };

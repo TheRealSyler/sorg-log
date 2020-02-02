@@ -17,7 +17,7 @@
     "title": "Docs",
     "dir": "dist",
     "out": "README.md",
-    "include": "interfaces"
+    "include": ["loggers", "styler", "interfaces"]
   },
   "license": {
     "name": "Leonard Grosoli",

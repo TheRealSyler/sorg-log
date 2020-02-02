@@ -1,9 +1,9 @@
-import { styler } from './styler';
-
-type Matrix = (number | string)[][];
+import { getColumn, getMaxLength, isBrowser, getBrowserStyle, replaceStyles } from './utils';
+import { LogMessage, LogStyle, LogTable } from './interfaces';
+import { styler } from '.';
 
 /**Logs a table in node. */
-export function LogTable(table: Matrix) {
+export function LogTable(table: LogTable) {
   if (table[0] === undefined) return;
 
   let output = '';
@@ -28,22 +28,22 @@ export function LogTable(table: Matrix) {
   console.log(output.replace(/\n$/, ''));
 }
 
-function getMaxLength(column: Matrix[0]) {
-  let max = 0;
-  for (let i = 0; i < column.length; i++) {
-    const field = column[i];
-    if (field) {
-      const length = replaceStyles(field).length;
-      max = length > max ? length : max;
+export function Log(...messages: (string | LogMessage)[]): void {
+  let output = '';
+  const browserStyles: LogStyle[] = [];
+  for (let i = 0; i < messages.length; i++) {
+    const msg = messages[i];
+    if (typeof msg === 'object') {
+      if (isBrowser) {
+        browserStyles.push(getBrowserStyle(msg.style));
+      }
+      output += styler(msg.message, msg.style);
+    } else {
+      output += msg;
+    }
+    if (i < messages.length - 1) {
+      output += ' ';
     }
   }
-  return max;
-}
-
-function replaceStyles(item: string | number) {
-  return item.toString().replace(/[\033\x1b\u001b]\[.*?m/g, '');
-}
-
-function getColumn(matrix: Matrix, col: number) {
-  return matrix.map(row => row[col]);
+  console.log(output, ...browserStyles);
 }

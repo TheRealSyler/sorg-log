@@ -1,12 +1,9 @@
-import { Preset } from './presets';
 import { FontWeightProperty } from 'csstype';
 
-export type LoggerWrapper = [string, string] | undefined | null;
-
 /**
- * color/background work in node and the browser, the other properties only work in the browser.
+ * color/background/font-weight work in node and the browser, the other properties only work in the browser.
  */
-export type LoggerStyle =
+export type LogStyle =
   | string
   | {
       background?: string;
@@ -17,84 +14,61 @@ export type LoggerStyle =
       /** for bold text in node add the value 'bold' */
       'font-weight'?: FontWeightProperty;
       /** if true the style doesn't get reset in node. */
-      removeResetColorCode?: boolean;
       [key: string]: number | boolean | string | undefined;
     };
 
-export type LogType = string | number | null | undefined | object | any[];
+export type ConverterInput = string | number | null | undefined | object | Array<ConverterInput>;
 
-export interface BrowserContext {
-  styles: LoggerStyle[];
-  index: number;
-  offset: number;
-}
+// REVIEW What is BrowserContext? and is it useful?
+// export interface BrowserContext {
+//   styles: LogStyle[];
+//   index: number;
+//   offset: number;
+// }
 
-export interface ConverterContext {
-  isObject?: boolean;
-  styled?: boolean;
-  browserContext?: BrowserContext;
-  indentation?: number;
-  index?: number;
-  typeStyles: LoggerTypeStyles;
-}
-export interface LoggerTypeStyles {
-  /** Style Applied to any number. */
-  number: LoggerStyle;
+// export interface ConverterContext {
+//   isObject?: boolean;
+//   styled?: boolean;
+//   browserContext?: BrowserContext;
+//   indentation?: number;
+//   index?: number;
+//   typeStyles?: ConverterTypeStyles;
+// }
+// export interface ConverterTypeStyles {
+//   /** Style Applied to any number. */
+//   number: LogStyle;
 
-  /** Style Applied to any string inside of an array or object. */
-  string: LoggerStyle;
+//   /** Style Applied to any string inside of an array or object. */
+//   string: LogStyle;
 
-  /** Style Applied to the brackets of any array or object */
-  bracket: LoggerStyle;
+//   /** Style Applied to the brackets of any array or object */
+//   bracket: LogStyle;
 
-  /** Style Applied to the key of any array or object */
-  key: LoggerStyle;
+//   /** Style Applied to the key of any array or object */
+//   key: LogStyle;
 
-  /** * Style Applied to the name (constructor) of any array or object */
-  name: LoggerStyle;
+//   /** * Style Applied to the name (constructor) of any array or object */
+//   name: LogStyle;
 
-  /** Style Applied to null type. */
-  null: LoggerStyle;
+//   /** Style Applied to null type. */
+//   null: LogStyle;
 
-  /** Style Applied to undefined type. */
-  undefined: LoggerStyle;
+//   /** Style Applied to undefined type. */
+//   undefined: LogStyle;
 
-  /** Style Applied to empty arrays. */
-  emptyArray: LoggerStyle;
-}
-export type ConverterOutput = {
+//   /** Style Applied to empty arrays. */
+//   emptyArray: LogStyle;
+// }
+// export type ConverterOutput = {
+//   message: string;
+//   styled: boolean;
+// };
+
+// export type Converter = (message: ConverterInput, context?: ConverterContext) => ConverterOutput;
+
+export type LogMessage = {
   message: string;
-  styled: boolean;
-  nodeOnly?: boolean;
-  wrap?: boolean;
+  style?: LogStyle;
 };
-export type Converter = (message: LogType, context: ConverterContext) => ConverterOutput;
-export type Styler = (
-  message: ConverterOutput | string,
-  style: LoggerStyle,
-  wrapper?: LoggerWrapper
-) => string;
 
-export interface LoggerType {
-  styles?: LoggerStyle[];
-  wrappers?: LoggerWrapper[];
-  preset?: Preset;
-  /**
-   * Used to change Messages before they get styled.
-   */
-  customHandler?: CustomHandler;
-  enabled?: boolean;
-  /**
-   * Customize styles of arrays, objects, string etc.
-   */
-  typeStyles?: LoggerTypeStyles;
-}
-export type CustomHandlerData = {
-  rawMessages: LogType[];
-  wrappers: LoggerWrapper[];
-  styles: LoggerStyle[];
-  typeStyles: LoggerTypeStyles;
-};
-export type CustomHandler = (data: CustomHandlerData) => string;
-
-export type PresetHandler<T> = (preset: T, data: CustomHandlerData) => string;
+export type LogTable = (number | string)[][];

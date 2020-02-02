@@ -23,15 +23,15 @@
   "author": "Syler",
   "license": "MIT",
   "devDependencies": {
-    "@types/jest": "^25.1.0",
+    "@types/jest": "^25.1.1",
     "jest": "^25.1.0",
-    "ts-jest": "^25.0.0",
     "suf-cli": "^0.1.0",
-    "typescript": "^3.7.2"
+    "ts-jest": "^25.1.0",
+    "typescript": "^3.7.5"
   },
   "dependencies": {
     "csstype": "^2.6.8",
-    "s.color": "^0.0.11",
+    "s.color": "0.0.13",
     "tslib": "^1.10.0"
   },
   "jest": {

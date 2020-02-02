@@ -1,69 +1,45 @@
-import { stringColorToAnsiColor } from './utils';
-import { LoggerStyle, LoggerWrapper } from './interfaces';
+import { stringColorToAnsiColor, ANSICodes } from './utils';
+import { LogStyle } from './interfaces';
 
-export function WrapStyle(
-  message: string,
-  wrapper: LoggerWrapper,
-  style?: string,
-  removeResetColorCode = false
-) {
-  return handleStyle(
-    `${wrapper && wrapper[0] ? wrapper[0] : ''}${message}${
-      wrapper && wrapper[1] ? wrapper[1] : ''
-    }`,
-    style,
-    removeResetColorCode
-  );
-}
-function handleStyle(msg: string, style: string | undefined, removeResetColorCode: boolean) {
+export function WrapStyle(msg: string, style?: string, addReset?: boolean) {
   if (style) {
-    if (removeResetColorCode) {
-      return `${style}${msg}`;
+    if (addReset) {
+      return getReset(`${style}${msg}`);
     }
-    return getANSICode('reset', `${style}${msg}`);
+    return `${style}${msg}`;
   }
   return msg;
 }
 
-export function getNodeStyle(style: LoggerStyle) {
+export function getNodeStyle(style: LogStyle) {
   if (typeof style === 'string') {
-    return {
-      color: getANSICode('color', stringColorToAnsiColor(style)),
-      background: '',
-      bold: ''
-    };
+    return `\x1b[${handleUndefined(stringColorToAnsiColor('color', style)).replace(/;$/, '')}m`;
   } else {
-    return {
-      bold: style['font-weight'] === 'bold' ? getANSICode('bold') : '',
-      color: getANSICode('color', stringColorToAnsiColor(style.color)),
-      background: getANSICode('background', stringColorToAnsiColor(style.background))
-    };
+    const codes = `${style['font-weight'] === 'bold' ? ANSICodes('bold') : ''}${handleUndefined(
+      stringColorToAnsiColor('color', style.color)
+    )}${handleUndefined(stringColorToAnsiColor('background', style.background))}`;
+    return `\x1b[${codes.replace(/;$/, '')}m`;
   }
 }
 
-function getANSICode(type: 'color' | 'background' | 'reset' | 'bold', color?: number | string) {
-  switch (type) {
-    case 'color':
-      return color !== undefined ? `\u001B[38;${color}m` : '';
-    case 'background':
-      return color !== undefined ? `\u001B[48;${color}m` : '';
-    case 'bold':
-      return `\u001B[1m`;
-    case 'reset':
-      return color !== undefined ? `${color}\u001b[0m` : '';
-  }
+function handleUndefined(input?: string) {
+  return input ? input : '';
 }
 
-export function createBrowserStyle(style: LoggerStyle) {
-  if (typeof style === 'string') {
-    return `color: ${style};`;
-  } else {
-    let res = '';
-    for (const key in style) {
-      if (style.hasOwnProperty(key)) {
-        res += `${key}: ${style[key]};`;
-      }
-    }
-    return res;
-  }
+function getReset(input?: number | string) {
+  return input !== undefined ? `${input}\u001b[${ANSICodes('reset')}m` : '';
 }
+
+// export function createBrowserStyle(style: LogStyle) {
+//   if (typeof style === 'string') {
+//     return `color: ${style};`;
+//   } else {
+//     let res = '';
+//     for (const key in style) {
+//       if (style.hasOwnProperty(key)) {
+//         res += `${key}: ${style[key]};`;
+//       }
+//     }
+//     return res;
+//   }
+// }
