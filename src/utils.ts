@@ -20,7 +20,7 @@ export function stringColorToAnsiColor(type: 'background' | 'color', color?: str
 export function ANSICodes(type: 'background' | 'color' | 'bold' | 'reset') {
   switch (type) {
     case 'reset':
-      return '0;';
+      return '0';
     case 'bold':
       return '1;';
     case 'color':
