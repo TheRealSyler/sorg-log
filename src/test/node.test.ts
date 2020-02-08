@@ -18,7 +18,7 @@ test('Log Table', () => {
   ]);
   LogTable([]); // added for codecov
   expect(log.data).toBe(`  b   c 
-1 \x1b[38;2;0;255;0m2\x1b[0;m\x1b[38;2;255;0;0mms\x1b[0;m 3 `);
+1 \x1b[38;2;0;255;0m2\x1b[0m\x1b[38;2;255;0;0mms\x1b[0m 3 `);
   log.TestEnd();
 });
 
@@ -35,8 +35,6 @@ test('Log Function (Node)', () => {
     }
   );
 
-  expect(log.data).toBe(
-    `\x1b[38;2;255;0;0ma\x1b[0;m b c for codecov \x1b[1;48;2;0;0;255md\x1b[0;m`
-  );
+  expect(log.data).toBe(`\x1b[38;2;255;0;0ma\x1b[0m b c for codecov \x1b[1;48;2;0;0;255md\x1b[0m`);
   log.TestEnd();
 });
