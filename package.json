@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "prepack": "npm run build && npm test && suf",
-    "build": "tsc -b",
+    "build": "del ./dist && tsc -b",
     "watch": "tsc -w",
     "test": "jest --coverage",
     "test:watch": "jest --watch --coverage"
@@ -23,17 +23,18 @@
   "author": "Syler",
   "license": "MIT",
   "devDependencies": {
-    "@types/jest": "^25.1.1",
+    "@types/jest": "^25.1.4",
     "jest": "^25.1.0",
-    "jest-store-log": "^1.0.0",
+    "jest-store-log": "^1.0.1",
     "suf-cli": "^0.1.0",
-    "ts-jest": "^25.1.0",
-    "typescript": "^3.7.5"
+    "ts-jest": "^25.2.1",
+    "typescript": "^3.8.3"
   },
   "dependencies": {
-    "csstype": "^2.6.8",
+    "csstype": "^2.6.9",
+    "del-cli": "^3.0.0",
     "s.color": "0.0.13",
-    "tslib": "^1.10.0"
+    "tslib": "^1.11.1"
   },
   "jest": {
     "moduleFileExtensions": [
