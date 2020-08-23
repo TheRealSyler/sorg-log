@@ -1,10 +1,10 @@
 {
   "name": "@sorg/log",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "prepack": "npm run build && npm test && suf",
+    "prepack": "yarn build && yarn test && suf",
     "build": "del ./dist && tsc -b",
     "watch": "tsc -w",
     "test": "jest --coverage",

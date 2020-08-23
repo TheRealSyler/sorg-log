@@ -73,4 +73,4 @@ export type LogMessage = {
   style?: LogStyle;
 };
 
-export type LogTable = (number | string)[][];
+export type LogTable = (number | string | LogMessage)[][];
