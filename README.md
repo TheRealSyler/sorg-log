@@ -17,9 +17,9 @@
 
 - **[loggers](#loggers)**
 
+  - [Log](#log)
   - [LogTableOptions](#logtableoptions)
   - [LogTable](#logtable)
-  - [Log](#log)
 
 - **[styler](#styler)**
 
@@ -69,6 +69,12 @@ type LogTable = (number | string | LogMessage)[][];
 
 ### loggers
 
+##### Log
+
+```typescript
+function Log(...messages: (string | LogMessage)[]): void;
+```
+
 ##### LogTableOptions
 
 ```typescript
@@ -83,12 +89,6 @@ interface LogTableOptions {
 ```typescript
 /**Logs a table in node. */
 function LogTable(table: LogTable, options?: LogTableOptions): void;
-```
-
-##### Log
-
-```typescript
-function Log(...messages: (string | LogMessage)[]): void;
 ```
 
 ### styler
