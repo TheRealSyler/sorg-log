@@ -1,12 +1,12 @@
 {
   "badges": {
-    "name": "@sorg/log",
+    "name": "suf-log",
     "github": "TheRealSyler",
-    "repo": "s.log",
+    "repo": "suf-log",
     "out": "README.md",
     "badges": [
       "circleci circleci",
-      "badge=https://codecov.io/gh/TheRealSyler/s.log/branch/master/graph/badge.svg link=https://codecov.io/gh/TheRealSyler/s.log",
+      "badge=https://codecov.io/gh/TheRealSyler/suf-log/branch/master/graph/badge.svg link=https://codecov.io/gh/TheRealSyler/suf-log",
       "npmV npm ?color=green",
       "min bundle",
       "install package",
