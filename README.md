@@ -1,7 +1,5 @@
 ## suf-log
 
-> Note: this package has been renamed to [suf-log](https://www.npmjs.com/package/suf-log) and is therefore deprecated.
-
 <span id="BADGE_GENERATION_MARKER_0"></span>
 [![circleci](https://img.shields.io/circleci/build/github/TheRealSyler/suf-log)](https://app.circleci.com/github/TheRealSyler/suf-log/pipelines) [![Custom](https://codecov.io/gh/TheRealSyler/suf-log/branch/master/graph/badge.svg)](https://codecov.io/gh/TheRealSyler/suf-log) [![npmV](https://img.shields.io/npm/v/suf-log?color=green)](https://www.npmjs.com/package/suf-log) [![min](https://img.shields.io/bundlephobia/min/suf-log)](https://bundlephobia.com/result?p=suf-log) [![install](https://badgen.net/packagephobia/install/suf-log)](https://packagephobia.now.sh/result?p=suf-log) [![githubLastCommit](https://img.shields.io/github/last-commit/TheRealSyler/suf-log)](https://github.com/TheRealSyler/suf-log)
 <span id="BADGE_GENERATION_MARKER_1"></span>
