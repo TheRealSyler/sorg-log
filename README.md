@@ -87,7 +87,6 @@ interface LogTableOptions {
 ##### LogTable
 
 ```typescript
-/**Logs a table in node. */
 function LogTable(table: LogTable, options?: LogTableOptions): void;
 ```
 
@@ -96,6 +95,14 @@ function LogTable(table: LogTable, options?: LogTableOptions): void;
 ##### styler
 
 ```typescript
+/**
+ * this function is not browser compatible*.
+ * @example ```ts
+ * console.log(styler('test', 'red'))
+ * ```
+ *
+ * *you have to add the styles manually, use the Log function for browser compatibly.
+ */
 function styler(input: string, style?: LogStyle): string;
 ```
 
