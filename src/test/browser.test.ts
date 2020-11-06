@@ -1,5 +1,5 @@
-import { SetLoggerEnvironment } from '../utils';
-import { Log } from '../index';
+import { getBrowserStyle, SetLoggerEnvironment } from '../utils';
+import { Log, LogS } from '../index';
 import { JestStoreLog } from 'jest-store-log';
 SetLoggerEnvironment('browser');
 
@@ -19,4 +19,35 @@ test('Log Function (Browser)', () => {
     'color: #0f0; background: #000; ',
   ]);
   log.TestEnd();
+});
+
+test('LogS Function (Browser)', () => {
+  const log = new JestStoreLog();
+  const start = {
+    color: '#fff',
+    background: '#000',
+  };
+
+  const endStyle = '#000';
+  const a = [start, endStyle];
+  LogS(a, 'Awd', 'Test');
+
+  expect(log.logs).toStrictEqual([
+    `%cAwd %cTest`,
+    'color: #fff; background: #000; ',
+    'color: #000;',
+  ]);
+  log.logs = [];
+  LogS(['#fff'], 'Awd', 'Test');
+  expect(log.logs).toStrictEqual([`%cAwd %cTest`, 'color: #fff;']);
+
+  log.TestEnd();
+});
+
+test('getBrowserStyle codecov completion', () => {
+  class Test {
+    test() {}
+  }
+
+  getBrowserStyle(new Test() as any);
 });

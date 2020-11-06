@@ -1,4 +1,4 @@
-import { LogTable, Log } from '../loggers';
+import { LogTable, Log, LogS } from '../loggers';
 import { styler } from '../styler';
 import { SetLoggerEnvironment } from '../utils';
 // import { converter } from '../converter';
@@ -76,6 +76,25 @@ test('Log Function (Node)', () => {
 
   expect(log.data).toBe(
     `\x1b[38;2;255;0;0ma\x1b[0m b c for codecov \x1b[1;48;2;0;0;255md\x1b[0m \x1b[me\x1b[0m`
+  );
+
+  log.TestEnd();
+});
+
+test('LogS Function (Node)', () => {
+  const log = new JestStoreLog();
+
+  const start = {
+    color: '#fff',
+    background: '#000',
+  };
+
+  const endStyle = '#000';
+  const a = [start, endStyle];
+  LogS(a, 'Awd', 'Test');
+
+  expect(log.logs[0]).toBe(
+    `\x1b[38;2;255;255;255;48;2;0;0;0mAwd\x1b[0m \x1b[38;2;0;0;0mTest\x1b[0m`
   );
 
   log.TestEnd();

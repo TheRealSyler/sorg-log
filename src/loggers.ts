@@ -80,3 +80,23 @@ export function LogTable(table: LogTable, options: LogTableOptions = defaultLogT
   }
   console.log(output.replace(/\n$/, ''));
 }
+
+export function LogS(styles: LogStyle[], ...messages: string[]) {
+  const browserStyles: string[] = [];
+  let output = '';
+
+  for (let i = 0; i < messages.length; i++) {
+    const msg = messages[i];
+    if (isBrowser) {
+      const style = getBrowserStyle(styles[i]);
+      if (style) browserStyles.push(style);
+    }
+
+    output += styler(msg, styles[i]);
+
+    if (i < messages.length - 1) {
+      output += ' ';
+    }
+  }
+  console.log(output, ...browserStyles);
+}
