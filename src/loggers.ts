@@ -10,14 +10,16 @@ import {
 import { LogMessage, LogStyle, LogTable } from './interfaces';
 import { styler } from '.';
 
+/**works in node and the browser.*/
 export function Log(...messages: (string | LogMessage)[]): void {
   let output = '';
-  const browserStyles: LogStyle[] = [];
+  const browserStyles: string[] = [];
   for (let i = 0; i < messages.length; i++) {
     const msg = messages[i];
     if (typeof msg === 'object') {
       if (isBrowser) {
-        browserStyles.push(getBrowserStyle(msg.style));
+        const style = getBrowserStyle(msg.style);
+        if (style) browserStyles.push(style);
       }
       output += styler(msg.message, msg.style);
     } else {
@@ -35,7 +37,7 @@ export interface LogTableOptions {
   spacing?: number;
 }
 
-/**Logs a table in node. */
+/**this function is node only*/
 export function LogTable(table: LogTable, options: LogTableOptions = defaultLogTableOptions) {
   if (table[0] === undefined) return;
   const { padding, spacing } = { ...defaultLogTableOptions, ...options };

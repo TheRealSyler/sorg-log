@@ -19,17 +19,3 @@ function handleUndefined(input?: string) {
 export function addReset(input: number | string) {
   return `${input}\u001b[${ANSICodes('reset')}m`;
 }
-
-// export function createBrowserStyle(style: LogStyle) {
-//   if (typeof style === 'string') {
-//     return `color: ${style};`;
-//   } else {
-//     let res = '';
-//     for (const key in style) {
-//       if (style.hasOwnProperty(key)) {
-//         res += `${key}: ${style[key]};`;
-//       }
-//     }
-//     return res;
-//   }
-// }
