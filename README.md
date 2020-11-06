@@ -11,7 +11,6 @@
 - **[interfaces](#interfaces)**
 
   - [LogStyle](#logstyle)
-  - [ConverterInput](#converterinput)
   - [LogMessage](#logmessage)
   - [LogTable](#logtable)
 
@@ -20,6 +19,7 @@
   - [Log](#log)
   - [LogTableOptions](#logtableoptions)
   - [LogTable](#logtable)
+  - [LogS](#logs)
 
 - **[styler](#styler)**
 
@@ -44,12 +44,6 @@ type LogStyle = string | {
     /** if true the style doesn't get reset in node. */
     [key: string]: number | boolean | string | undefined;
 }
-```
-
-##### ConverterInput
-
-```typescript
-type ConverterInput = AcceptableTypes | Array<AcceptableTypes>;
 ```
 
 ##### LogMessage
@@ -88,6 +82,12 @@ interface LogTableOptions {
 
 ```typescript
 function LogTable(table: LogTable, options?: LogTableOptions): void;
+```
+
+##### LogS
+
+```typescript
+function LogS(styles: LogStyle[], ...messages: string[]): void;
 ```
 
 ### styler
