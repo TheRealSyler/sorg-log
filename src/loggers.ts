@@ -2,13 +2,13 @@ import {
   getColumn,
   maxTableColumnLength,
   isBrowser,
-  getBrowserStyle,
-  removeStyles,
+  removeNodeStyles,
   pad,
   defaultLogTableOptions,
 } from './utils';
 import { LogMessage, LogStyle, LogTable } from './interfaces';
 import { styler } from '.';
+import { transformToBrowserStyle } from './transformStyles';
 
 /**works in node and the browser.*/
 export function Log(...messages: (string | LogMessage)[]): void {
@@ -18,7 +18,7 @@ export function Log(...messages: (string | LogMessage)[]): void {
     const msg = messages[i];
     if (typeof msg === 'object') {
       if (isBrowser) {
-        const style = getBrowserStyle(msg.style);
+        const style = transformToBrowserStyle(msg.style);
         if (style) browserStyles.push(style);
       }
       output += styler(msg.message, msg.style);
@@ -66,7 +66,7 @@ export function LogTable(table: LogTable, options: LogTableOptions = defaultLogT
       const startPadding = j === 0 ? padding : 0;
       const endPadding = maxLengths[j] + (j === row.length - 1 ? padding : spacing);
 
-      const textLength = removeStyles(text).length;
+      const textLength = removeNodeStyles(text).length;
 
       const paddedText = pad(text, startPadding, endPadding - textLength);
 
@@ -89,7 +89,7 @@ export function LogS(styles: LogStyle[], ...messages: string[]) {
   for (let i = 0; i < messages.length; i++) {
     const msg = messages[i];
     if (isBrowser) {
-      const style = getBrowserStyle(styles[i]);
+      const style = transformToBrowserStyle(styles[i]);
       if (style) browserStyles.push(style);
     }
 
@@ -103,11 +103,11 @@ export function LogS(styles: LogStyle[], ...messages: string[]) {
 }
 
 /**Log a single message with an optional style, works in the browser and node. */
-export function LogO(message: string, style?: LogStyle) {
+export function LogSingle(message: string, style?: LogStyle) {
   const output = styler(message, style);
 
   if (isBrowser) {
-    console.log(output, getBrowserStyle(style) || '');
+    console.log(output, transformToBrowserStyle(style) || '');
     return;
   }
 

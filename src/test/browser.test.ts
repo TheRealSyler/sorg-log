@@ -1,7 +1,8 @@
-import { getBrowserStyle, SetLoggerEnvironment } from '../utils';
+import { SetLoggerEnvironment } from '../utils';
 import { Log, LogS } from '../index';
 import { JestStoreLog } from 'jest-store-log';
-import { LogO } from '../loggers';
+import { LogSingle } from '../loggers';
+import { transformToBrowserStyle } from '../transformStyles';
 SetLoggerEnvironment('browser');
 
 test('Log (Browser)', () => {
@@ -47,7 +48,7 @@ test('LogS (Browser)', () => {
 
 test('LogO (Browser)', () => {
   const log = new JestStoreLog();
-  LogO('Test', {
+  LogSingle('Test', {
     color: '#fff',
     background: '#000',
   });
@@ -57,15 +58,15 @@ test('LogO (Browser)', () => {
     'display: inline-block; color: #fff; background: #000; ',
   ]);
   log.logs = [];
-  LogO('Test');
+  LogSingle('Test');
   expect(log.logs).toStrictEqual([`%cTest`, '']);
   log.TestEnd();
 });
 
-test('getBrowserStyle codecov completion', () => {
+test('transformToBrowserStyle codecov completion', () => {
   class Test {
     test() {}
   }
 
-  getBrowserStyle(new Test() as any);
+  transformToBrowserStyle(new Test() as any);
 });

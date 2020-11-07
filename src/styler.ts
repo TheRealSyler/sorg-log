@@ -1,5 +1,5 @@
-import { getNodeStyle, addReset } from './handleStyle';
-import { isBrowser } from './utils';
+import { transformToNodeStyle } from './transformStyles';
+import { addReset, isBrowser } from './utils';
 import { LogStyle } from './interfaces';
 
 /**
@@ -16,7 +16,7 @@ export function styler(input: string, style?: LogStyle) {
   }
 
   if (style) {
-    return addReset(`${getNodeStyle(style)}${input}`);
+    return addReset(`${transformToNodeStyle(style)}${input}`);
   }
 
   return input;

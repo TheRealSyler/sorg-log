@@ -1,7 +1,6 @@
-import { LogTable, Log, LogS, LogO } from '../loggers';
+import { LogTable, Log, LogS, LogSingle } from '../loggers';
 import { styler } from '../styler';
 import { SetLoggerEnvironment } from '../utils';
-// import { converter } from '../converter';
 import { JestStoreLog } from 'jest-store-log';
 import { LogStyle } from '../interfaces';
 
@@ -102,7 +101,7 @@ test('LogS Function (Node)', () => {
 
 test('LogO (Node)', () => {
   const log = new JestStoreLog();
-  LogO('Test', {
+  LogSingle('Test', {
     color: '#fff',
     background: '#000',
   });
