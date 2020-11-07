@@ -6,15 +6,29 @@ import { FontWeightProperty } from 'csstype';
 export type LogStyle =
   | string
   | {
+      /**node and browser support */
       background?: string;
+      /**node and browser support */
       color?: string;
+      /**browser only */
       padding?: string;
+      /**browser only */
       margin?: string;
+      /**browser only, set to inline-block by default. */
+      display?: string;
+      /**browser only */
       border?: string;
+      /**browser only */
+      'border-radius'?: string;
+      /**browser only */
+      'text-align'?: string;
+      /**browser only */
+      'text-shadow'?: string;
+      /**browser only */
+      'font-size'?: string;
       /** for bold text in node add the value 'bold' */
-      'font-weight'?: FontWeightProperty;
-      /** if true the style doesn't get reset in node. */
-      [key: string]: number | boolean | string | undefined;
+      'font-weight'?: Exclude<FontWeightProperty, number>;
+      [key: string]: string | undefined;
     };
 
 export type LogMessage = {
