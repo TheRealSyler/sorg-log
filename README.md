@@ -17,7 +17,7 @@
 - **[loggers](#loggers)**
 
   - [LogS](#logs)
-  - [LogO](#logo)
+  - [LogSingle](#logsingle)
 
 - **[styler](#styler)**
 
@@ -32,15 +32,29 @@
  * color/background/font-weight work in node and the browser, the other properties only work in the browser.
  */
 type LogStyle = string | {
+    /**node and browser support */
     background?: string;
+    /**node and browser support */
     color?: string;
+    /**browser only */
     padding?: string;
+    /**browser only */
     margin?: string;
+    /**browser only, set to inline-block by default. */
+    display?: string;
+    /**browser only */
     border?: string;
+    /**browser only */
+    'border-radius'?: string;
+    /**browser only */
+    'text-align'?: string;
+    /**browser only */
+    'text-shadow'?: string;
+    /**browser only */
+    'font-size'?: string;
     /** for bold text in node add the value 'bold' */
-    'font-weight'?: FontWeightProperty;
-    /** if true the style doesn't get reset in node. */
-    [key: string]: number | boolean | string | undefined;
+    'font-weight'?: Exclude<FontWeightProperty, number>;
+    [key: string]: string | undefined;
 }
 ```
 
@@ -76,11 +90,11 @@ function LogTable(table: LogTable, options?: LogTableOptions): void;
 function LogS(styles: LogStyle[], ...messages: string[]): void;
 ```
 
-##### LogO
+##### LogSingle
 
 ```typescript
 /**Log a single message with an optional style, works in the browser and node. */
-function LogO(message: string, style?: LogStyle): void;
+function LogSingle(message: string, style?: LogStyle): void;
 ```
 
 ### styler
