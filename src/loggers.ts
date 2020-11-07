@@ -80,7 +80,8 @@ export function LogTable(table: LogTable, options: LogTableOptions = defaultLogT
   }
   console.log(output.replace(/\n$/, ''));
 }
-/**Variant of the main Log function also works in the browser and node */
+
+/**works in the browser and node. */
 export function LogS(styles: LogStyle[], ...messages: string[]) {
   const browserStyles: string[] = [];
   let output = '';
@@ -101,7 +102,7 @@ export function LogS(styles: LogStyle[], ...messages: string[]) {
   console.log(output, ...browserStyles);
 }
 
-/**Variant of the main Log function also works in the browser and node */
+/**Log a single message with an optional style, works in the browser and node. */
 export function LogO(message: string, style?: LogStyle) {
   const output = styler(message, style);
 

@@ -8,8 +8,9 @@ test('Log Function (Browser)', () => {
   Log({ message: 'a', style: 'red' });
 
   expect(log.logs).toStrictEqual([`%ca`, 'color: red;']);
-  log.TestEnd();
-  log = new JestStoreLog();
+
+  log.logs = [];
+
   SetEnvironment('node');
   Log({ message: 'a', style: 'red' });
 
