@@ -9,14 +9,14 @@ test('Log Function (Browser)', () => {
   Log(
     { message: 'a', style: 'red' },
     'b',
-    { message: 'c', style: { color: '#0f0', background: '#000' } },
+    { message: 'c', style: { color: '#0f0', display: 'none', background: '#000' } },
     { message: 'd' }
   );
 
   expect(log.logs).toStrictEqual([
     `%ca b %cc %cd`,
     'color: red;',
-    'color: #0f0; background: #000; ',
+    'color: #0f0; display: none; background: #000; ',
   ]);
   log.TestEnd();
 });
@@ -34,7 +34,7 @@ test('LogS Function (Browser)', () => {
 
   expect(log.logs).toStrictEqual([
     `%cAwd %cTest`,
-    'color: #fff; background: #000; ',
+    'display: inline-block; color: #fff; background: #000; ',
     'color: #000;',
   ]);
   log.logs = [];

@@ -39,6 +39,9 @@ export function getBrowserStyle(style?: LogStyle) {
     return `color: ${style};`;
   }
   let out = '';
+  if (!('display' in style)) {
+    out += `display: inline-block; `;
+  }
   for (const key in style) {
     if (Object.prototype.hasOwnProperty.call(style, key)) {
       out += `${key}: ${style[key]}; `;
