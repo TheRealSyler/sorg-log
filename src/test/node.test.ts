@@ -1,4 +1,4 @@
-import { LogTable, Log, LogS } from '../loggers';
+import { LogTable, Log, LogS, LogO } from '../loggers';
 import { styler } from '../styler';
 import { SetLoggerEnvironment } from '../utils';
 // import { converter } from '../converter';
@@ -96,6 +96,18 @@ test('LogS Function (Node)', () => {
   expect(log.logs[0]).toBe(
     `\x1b[38;2;255;255;255;48;2;0;0;0mAwd\x1b[0m \x1b[38;2;0;0;0mTest\x1b[0m`
   );
+
+  log.TestEnd();
+});
+
+test('LogO (Node)', () => {
+  const log = new JestStoreLog();
+  LogO('Test', {
+    color: '#fff',
+    background: '#000',
+  });
+
+  expect(log.logs[0]).toEqual(`\x1b[38;2;255;255;255;48;2;0;0;0mTest\x1b[0m`);
 
   log.TestEnd();
 });

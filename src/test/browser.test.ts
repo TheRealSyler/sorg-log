@@ -1,9 +1,10 @@
 import { getBrowserStyle, SetLoggerEnvironment } from '../utils';
 import { Log, LogS } from '../index';
 import { JestStoreLog } from 'jest-store-log';
+import { LogO } from '../loggers';
 SetLoggerEnvironment('browser');
 
-test('Log Function (Browser)', () => {
+test('Log (Browser)', () => {
   const log = new JestStoreLog();
 
   Log(
@@ -21,7 +22,7 @@ test('Log Function (Browser)', () => {
   log.TestEnd();
 });
 
-test('LogS Function (Browser)', () => {
+test('LogS (Browser)', () => {
   const log = new JestStoreLog();
   const start = {
     color: '#fff',
@@ -41,6 +42,23 @@ test('LogS Function (Browser)', () => {
   LogS(['#fff'], 'Awd', 'Test');
   expect(log.logs).toStrictEqual([`%cAwd %cTest`, 'color: #fff;']);
 
+  log.TestEnd();
+});
+
+test('LogO (Browser)', () => {
+  const log = new JestStoreLog();
+  LogO('Test', {
+    color: '#fff',
+    background: '#000',
+  });
+
+  expect(log.logs).toStrictEqual([
+    `%cTest`,
+    'display: inline-block; color: #fff; background: #000; ',
+  ]);
+  log.logs = [];
+  LogO('Test');
+  expect(log.logs).toStrictEqual([`%cTest`, '']);
   log.TestEnd();
 });
 
