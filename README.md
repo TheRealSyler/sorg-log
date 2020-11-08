@@ -12,7 +12,7 @@
 
   - [LogStyle](#logstyle)
   - [LogMessage](#logmessage)
-  - [LogTable](#logtable)
+  - [LogTableInput](#logtableinput)
 
 - **[loggers](#loggers)**
 
@@ -67,10 +67,10 @@ type LogMessage = {
 }
 ```
 
-##### LogTable
+##### LogTableInput
 
 ```typescript
-type LogTable = (number | string | LogMessage)[][];
+type LogTableInput = (number | string | LogMessage)[][];
 ```
 
 ### loggers
@@ -84,8 +84,8 @@ interface LogTableOptions {
     padding?: number;
     spacing?: number;
 }
-/**this function is node only*/
-function LogTable(table: LogTable, options?: LogTableOptions): void;
+/**node only*/
+function LogTable(table: LogTableInput, options?: LogTableOptions): void;
 /**works in the browser and node. */
 function LogS(styles: LogStyle[], ...messages: string[]): void;
 ```
