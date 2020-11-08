@@ -1,5 +1,5 @@
 import { StringToRGB } from 's.color';
-import { LogTable } from './interfaces';
+import { LogTableInput } from './interfaces';
 
 export let isBrowser = typeof window !== 'undefined' && typeof window.document !== 'undefined';
 
@@ -33,7 +33,7 @@ export function ANSICodes(type: 'background' | 'color' | 'bold' | 'reset') {
   }
 }
 
-export function maxTableColumnLength(column: LogTable[0]) {
+export function maxTableColumnLength(column: LogTableInput[0]) {
   let max = 0;
   for (let i = 0; i < column.length; i++) {
     const field = column[i];
@@ -54,7 +54,7 @@ export function pad(text: string, start: number, end: number) {
   return `${space(start)}${text}${space(end)}`;
 }
 
-export function getColumn(matrix: LogTable, col: number) {
+export function getColumn(matrix: LogTableInput, col: number) {
   return matrix.map((row) => row[col]);
 }
 

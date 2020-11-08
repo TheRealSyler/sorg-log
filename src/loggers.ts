@@ -6,7 +6,7 @@ import {
   pad,
   defaultLogTableOptions,
 } from './utils';
-import { LogMessage, LogStyle, LogTable } from './interfaces';
+import { LogMessage, LogStyle, LogTableInput } from './interfaces';
 import { styler } from '.';
 import { transformToBrowserStyle } from './transformStyles';
 
@@ -37,8 +37,8 @@ export interface LogTableOptions {
   spacing?: number;
 }
 
-/**this function is node only*/
-export function LogTable(table: LogTable, options: LogTableOptions = defaultLogTableOptions) {
+/**node only*/
+export function LogTable(table: LogTableInput, options: LogTableOptions = defaultLogTableOptions) {
   if (table[0] === undefined) return;
   const { padding, spacing } = { ...defaultLogTableOptions, ...options };
 

@@ -36,4 +36,4 @@ export type LogMessage = {
   style?: LogStyle;
 };
 
-export type LogTable = (number | string | LogMessage)[][];
+export type LogTableInput = (number | string | LogMessage)[][];
