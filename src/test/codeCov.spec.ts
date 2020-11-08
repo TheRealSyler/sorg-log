@@ -1,6 +1,6 @@
-import { ANSICodes, removeStyles } from '../index';
+import { ANSICodes, removeNodeStyles } from '../index';
 
 test('codeCov completion', () => {
-  removeStyles('');
+  removeNodeStyles('');
   expect(ANSICodes('reset')).toEqual('0');
 });
