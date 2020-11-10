@@ -69,7 +69,7 @@ test('Log Function (Node)', () => {
     },
     {
       message: 'e',
-      style: { 'font-weight': '-moz-initial' },
+      style: { 'font-weight': 'bolder' },
     }
   );
 

@@ -1,6 +1,6 @@
 {
   "name": "suf-log",
-  "version": "2.5.2",
+  "version": "2.5.3",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -24,7 +24,6 @@
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^25.1.4",
-    "csstype": "^2.6.9",
     "del-cli": "^3.0.0",
     "jest": "^25.1.0",
     "jest-store-log": "^1.1.1",

@@ -1,5 +1,3 @@
-import { FontWeightProperty } from 'csstype';
-
 /**
  * color/background/font-weight work in node and the browser, the other properties only work in the browser.
  */
@@ -27,7 +25,20 @@ export type LogStyle =
       /**browser only */
       'font-size'?: string;
       /** for bold text in node add the value 'bold' */
-      'font-weight'?: Exclude<FontWeightProperty, number>;
+      'font-weight'?:
+        | 'bold'
+        | 'normal'
+        | 'bolder'
+        | 'lighter'
+        | '100'
+        | '200'
+        | '300'
+        | '400'
+        | '500'
+        | '600'
+        | '700'
+        | '800'
+        | '900';
       [key: string]: string | undefined;
     };
 
