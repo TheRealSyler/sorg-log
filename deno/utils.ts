@@ -15,9 +15,12 @@ export function stringColorToAnsiColor(type: 'background' | 'color', color?: str
   if (!color) {
     return undefined;
   }
-  const { r, g, b } = StringToRGB(color, true);
-
-  return `${ANSICodes(type)};2;${r};${g};${b};`;
+  const rgb = StringToRGB(color, true);
+  if (rgb) {
+    const { r, g, b } = rgb
+    return `${ANSICodes(type)};2;${r};${g};${b};`;
+  }
+  return `${ANSICodes(type)};2;0;0;0;`;
 }
 
 export function ANSICodes(type: 'background' | 'color' | 'bold' | 'reset') {
