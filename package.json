@@ -4,8 +4,9 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "prepack": "yarn build && yarn test && suf",
+    "prepack": "yarn build && yarn build:deno && yarn test && suf",
     "build": "del ./dist && tsc -b",
+    "build:deno": "del ./deno && ts-node ./buildDeno.ts",
     "watch": "tsc -w",
     "test": "jest --coverage",
     "test:watch": "jest --watch --coverage"

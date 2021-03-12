@@ -5,10 +5,10 @@ import {
   removeNodeStyles,
   pad,
   defaultLogTableOptions,
-} from './utils';
-import { LogMessage, LogStyle, LogTableInput } from './interfaces';
-import { styler } from './styler';
-import { transformToBrowserStyle } from './transformStyles';
+} from './utils.ts';
+import { LogMessage, LogStyle, LogTableInput } from './interfaces.ts';
+import { styler } from './styler.ts';
+import { transformToBrowserStyle } from './transformStyles.ts';
 
 /**works in node and the browser.*/
 export function Log(...messages: (string | LogMessage)[]): void {

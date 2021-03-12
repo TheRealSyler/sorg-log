@@ -1,5 +1,5 @@
-import { StringToRGB } from 's.color';
-import { LogTableInput } from './interfaces';
+import { StringToRGB } from 'https://deno.land/x/suf_color@0.0.15.4/deno/mod.ts';
+import { LogTableInput } from './interfaces.ts';
 // @ts-ignore deno comment
 export let isBrowser = typeof window !== undefined && typeof window.document !== undefined;
 
